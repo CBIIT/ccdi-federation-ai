@@ -46,24 +46,40 @@ ccdi-federation-agentskill/
 
 ### Runtime model
 
-```text
-User Request
-  ↓
-AI Assistant
-  ↓
-CCDI Federation Helper (router policy in SKILL.md)
-  ↓
-Reference workflow docs (cohort-query-builder / api-explainer)
-  ↓
-MCP Server (ccdi-federation) [PREFERRED]    OR    Optional helper scripts [FALLBACK]
-├─ list_operations                               (pv_mapper.py, ccdi_client.py)
-├─ get_operation_schema
-├─ call_operation (validated GET)
-└─ call_raw_get (raw GET)
-  ↓
-CCDI Federation metadata API (only when explicitly requested)
-  ↓
-User-facing explanation/plan/summary
+```mermaid
+graph TD
+    A["User Request"] --> B["AI Assistant"]
+    B --> C["CCDI Federation Helper<br/>(SKILL.md Router)"]
+    C --> D["Reference Workflows<br/>(cohort-query-builder/<br/>api-explainer)"]
+    
+    D --> E{"MCP Server<br/>Available?"}
+    
+    E -->|Yes - PREFERRED| F["ccdi-federation MCP<br/>(Node.js stdio)"]
+    E -->|No - FALLBACK| G["Helper Scripts<br/>(Python)"]
+    
+    F --> F1["list_operations"]
+    F --> F2["get_operation_schema"]
+    F --> F3["call_operation<br/>(validated GET)"]
+    F --> F4["call_raw_get<br/>(raw GET)"]
+    
+    G --> G1["pv_mapper.py"]
+    G --> G2["ccdi_client.py"]
+    
+    F1 --> H["CCDI Federation<br/>Metadata API<br/>(read-only)"]
+    F2 --> H
+    F3 --> H
+    F4 --> H
+    G1 --> H
+    G2 --> H
+    
+    H --> I["Structured Response<br/>with Metadata/Errors"]
+    
+    I --> J["User-facing Summary<br/>(explanation, plan, assumptions)"]
+    
+    style F fill:#4CAF50,stroke:#2E7D32,color:#fff
+    style G fill:#FF9800,stroke:#E65100,color:#fff
+    style H fill:#2196F3,stroke:#1565C0,color:#fff
+    style J fill:#9C27B0,stroke:#6A1B9A,color:#fff
 ```
 
 ### Design principle
