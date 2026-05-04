@@ -13,27 +13,33 @@ The skill is intentionally lightweight: prompt-driven orchestration first, helpe
 
 ## Current Implementation Snapshot
 
-This document reflects what is currently implemented in `skills/ccdi-federation-helper`.
+This document reflects what is currently implemented in `skills/ccdi-federation-helper` and `mcp/`.
 
-### Implemented skill package structure
+### Implemented project structure
 
 ```text
-skills/ccdi-federation-helper/
-├── SKILL.md
-├── README.md
-├── assets/
-├── schemas/
-├── references/
-│   ├── api-explainer.md
-│   ├── cohort-query-builder.md
-│   ├── openapi.yml
-│   └── pv/
-│       ├── file-pv-metadata.json
-│       ├── sample-pv-metadata.json
-│       └── subject-pv-metadata.json
-└── scripts/
-    ├── ccdi_client.py
-    └── pv_mapper.py
+ccdi-federation-agentskill/
+├── mcp/
+│   ├── ccdi_mcp_server.js        (Node.js stdio MCP server)
+│   ├── package.json
+│   └── package-lock.json
+├── .mcp.json                      (MCP server registration: ccdi-federation)
+└── skills/ccdi-federation-helper/
+    ├── SKILL.md
+    ├── README.md
+    ├── assets/
+    ├── schemas/
+    ├── references/
+    │   ├── api-explainer.md
+    │   ├── cohort-query-builder.md
+    │   ├── openapi.yml
+    │   └── pv/
+    │       ├── file-pv-metadata.json
+    │       ├── sample-pv-metadata.json
+    │       └── subject-pv-metadata.json
+    └── scripts/
+        ├── ccdi_client.py
+        └── pv_mapper.py
 ```
 
 ## Architecture Overview
@@ -49,7 +55,11 @@ CCDI Federation Helper (router policy in SKILL.md)
   ↓
 Reference workflow docs (cohort-query-builder / api-explainer)
   ↓
-Optional helper scripts (pv_mapper.py, ccdi_client.py)
+MCP Server (ccdi-federation) [PREFERRED]    OR    Optional helper scripts [FALLBACK]
+├─ list_operations                               (pv_mapper.py, ccdi_client.py)
+├─ get_operation_schema
+├─ call_operation (validated GET)
+└─ call_raw_get (raw GET)
   ↓
 CCDI Federation metadata API (only when explicitly requested)
   ↓
@@ -60,8 +70,22 @@ User-facing explanation/plan/summary
 
 ```text
 SKILL.md + references = reasoning, routing, policy
-scripts                = minimal deterministic helpers
+MCP server            = validated API execution (preferred path)
+scripts               = minimal deterministic helpers (fallback)
 ```
+
+### Execution layering
+
+1. **Prompt layer**: SKILL.md routes based on user intent
+2. **Planning layer**: Reference docs define cohort and API planning workflows
+3. **Execution layer** (MCP-first):
+   - If `ccdi-federation` MCP server is available, use its tools:
+     - `list_operations`: discover valid endpoints from OpenAPI spec
+     - `get_operation_schema`: inspect required/optional parameters for a path
+     - `call_operation`: execute validated OpenAPI-backed GET calls by path
+     - `call_raw_get`: fallback for raw GET requests that bypass OpenAPI validation
+   - If MCP server is unavailable, fall back to Python helper scripts or direct API fetching
+4. **Response layer**: Summarize and explain execution results with assumptions and errors
 
 ## Router Behavior (Implemented)
 
@@ -109,12 +133,17 @@ Implemented contract includes:
 2. Identify entity scope (`subject`, `sample`, `file`, or cross-entity)
 3. Normalize controlled values using PV metadata
 4. Validate route/parameters against `references/openapi.yml`
-5. Optionally execute read-only metadata API calls on explicit request
+5. Optionally execute read-only metadata API calls on explicit request via MCP server:
+   - Checks whether `ccdi-federation` MCP server is available
+   - Uses `call_operation` for validated OpenAPI-backed calls
+   - Falls back to direct API fetching if MCP is unavailable
 6. Return summary with assumptions, ambiguities, and limitations
 
 Important current defaults documented in the workflow:
 
-- `GET` read-only metadata execution
+- `GET` read-only metadata execution (always read-only, never write)
+- Preferred: MCP server (`ccdi-federation`) for execution when available
+- Fallback: direct HTTP fetch or Python helpers if MCP unavailable
 - Default `10` results per page
 - Default max `3` pages unless user asks for more
 
@@ -123,19 +152,53 @@ Important current defaults documented in the workflow:
 Implemented contract includes:
 
 1. Explain endpoint purpose, methods, parameters, pagination, and response shape
-2. Use `references/openapi.yml` as route/parameter source of truth
-3. Use PV metadata for controlled-value interpretation
-4. Explain harmonized vs unharmonized metadata distinctions
-5. Avoid inventing undocumented routes/fields/PVs
+2. MCP Server Layer (Implemented)
 
-## Script Layer (Implemented)
+### `mcp/ccdi_mcp_server.js`
+
+Implemented Node.js stdio MCP server exposing four tools:
+
+1. **`list_operations`**: Enumerate available GET endpoints extracted from OpenAPI spec
+2. **`get_operation_schema`**: Inspect required and optional parameters for a specific API path
+3. **`call_operation`**: Execute validated OpenAPI-backed GET call by path
+   - Input: `path`, `path_params` (optional), `query_params` (optional), `base_url` (optional), `timeout_seconds`, `max_retries`, `strict_query_validation`
+   - Output: Structured response with `ok`, `status`, `headers`, `payload`, `resolved_path`, `base_url`, and `warnings`
+4. **`call_raw_get`**: Execute raw read-only GET against configured base URL (fallback)
+   - Input: `path`, `query_params` (optional), `base_url` (optional), `timeout_seconds`, `max_retries`
+   - Output: Same structured envelope as `call_operation`
+
+### MCP Registration
+
+- Server registered in `.mcp.json` as `ccdi-federation`
+- Entry command: `node /path/to/mcp/ccdi_mcp_server.js`
+- Transport: stdio
+
+## Helper Script Layer (Fallback)
 
 ### `scripts/ccdi_client.py`
 
-Current implemented capabilities:
+Fallback capabilities (used only when MCP server is unavailable)
+## Script Layer (Implemented)
+Execution Path Preference (MCP-First Strategy)
 
-- Build URL with encoded query parameters
-- Execute read-only GET requests
+Current implementation now prioritizes the MCP server for live API execution:
+
+1. **Preferred path**: Check if `ccdi-federation` MCP server is available in the environment
+   - If available, use `call_operation` or `list_operations` for API interaction
+   - This provides validated, schema-aware execution with proper error handling
+2. **Fallback path**: If MCP is unavailable, use Python helper scripts or direct HTTP fetch
+   - Maintains backward compatibility with environments that don't have MCP infrastructure
+
+This MCP-first strategy is documented in `references/cohort-query-builder.md` and enforced by the workflow.
+
+## Scope Clarification
+
+The package README references additional workflows (for example, sanity checking and QA helpers), but those script modules are not present in the current skill directory.
+
+Design implication:
+
+- Current implementation is a metadata planning/explainer skill with an MCP server for validated API execution.
+- Python helper scripts remain as optional fallback
 - Parse JSON responses
 - Return structured success/error envelopes
 - Support configurable timeout and retry count
