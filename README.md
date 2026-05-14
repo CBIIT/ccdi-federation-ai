@@ -1,14 +1,13 @@
 # CCDI Federation AI workspace
 
-Lightweight workspace for CCDI Federation metadata workflows.
+This repository provides components for AI-ready CCDI Federation metadata, including an AgentSkill that standardizes AI interactions through workflows and routing, and a ccdi-federation MCP server that delivers schema-aligned, read-only access to federation data.
 
-## What This Repo Includes
 
 - `skills/ccdi-federation-ai-copilot/`: AgentSkill docs, routing, and fallback scripts
 - `mcp/`: `ccdi-federation` MCP server for validated read-only API calls
 
 
-
+![use skill2](./docs/instructions/images/9-codex-use-skill2.png)
 
 
 ## Skill Install for non-developers (using Codex)
