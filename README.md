@@ -12,7 +12,7 @@ Lightweight workspace for CCDI Federation metadata workflows.
 
 
 ## Skill Install for non-developers (using Codex)
-- use it in codex: [docs/instruction/codex-instruction.md](docs/instruction/codex-instruction.md)
+- use it in codex: [docs/instructions/codex-instruction.md](./docs/instructions/codex-instruction.md)
 
 
 ## Skill Install instructions for developers:
