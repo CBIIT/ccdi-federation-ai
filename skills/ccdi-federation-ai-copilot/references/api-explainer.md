@@ -1,8 +1,3 @@
----
-name: api-explainer
-description: explain ccdi federation api endpoints, parameters, response fields, permissible values, metadata relationships, example requests, and errors using openapi.yml, pv metadata references, and the ccdi federation api wiki. use this skill when the user asks what an endpoint does, how to call an endpoint, what parameters are supported, what a response field or permissible value means, how subject/sample/file metadata relate, why an api response looks a certain way, or how to interpret pagination, harmonized fields, unharmonized fields, node-level responses, or api errors. keep explanations metadata-only and use api documentation as the source of truth.
----
-
 # API Explainer
 
 ## Purpose
@@ -34,9 +29,9 @@ Use `openapi.yml` to confirm:
 
 Use the following PV metadata files when available:
 
-- `references/subject-pv-metadata.json`
-- `references/sample-pv-metadata.json`
-- `references/file-pv-metadata.json`
+- `references/pv/subject-pv-metadata.json`
+- `references/pv/sample-pv-metadata.json`
+- `references/pv/file-pv-metadata.json`
 
 ## Default behavior
 
@@ -104,7 +99,7 @@ Use the following PV metadata files when available:
 
 ## Explanation rules
 
-- Use `openapi.yml` as the source of truth for routes and parameters.
+- Use `references/openapi.yml` as the source of truth for routes and parameters.
 - Use PV metadata and the CCDI Federation API wiki as the source of truth for controlled-value explanation.
 - Do not invent routes, parameters, fields, response schemas, or permissible values.
 - Clearly distinguish:
@@ -132,7 +127,7 @@ Permissible values are controlled values defined for specific CCDI metadata fiel
 
 
 
-# PV Explanation Responsibilities
+## PV Explanation Responsibilities
 
 When explaining a permissible value, include:
 
@@ -147,7 +142,7 @@ When explaining a permissible value, include:
 
 Do not invent permissible values. If a value is not present in the PV metadata, say it is not validated as a supported PV.
 
-# Harmonized vs. Unharmonized Metadata
+## Harmonized vs. Unharmonized Metadata
 
 - Harmonized metadata uses standardized CCDI fields and controlled values when available.
 

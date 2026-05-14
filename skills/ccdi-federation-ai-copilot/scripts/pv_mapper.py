@@ -5,15 +5,15 @@ from typing import Optional
 
 def _get_metadata_path(endpoint_type: str) -> pathlib.Path:
     """Get the absolute path to the metadata JSON file for a given endpoint type.
-    
+
     Args:
         endpoint_type: One of 'file', 'sample', or 'subject'
-        
+
     Returns:
         Path to the metadata JSON file
     """
     script_dir = pathlib.Path(__file__).resolve().parent
-    references_dir = script_dir.parent / 'references'
+    pv_dir = script_dir.parent / 'references' / 'pv'
     
     metadata_files = {
         'file': 'file-pv-metadata.json',
@@ -24,15 +24,15 @@ def _get_metadata_path(endpoint_type: str) -> pathlib.Path:
     if endpoint_type not in metadata_files:
         raise ValueError(f"Unknown endpoint type: {endpoint_type}. Must be one of: {list(metadata_files.keys())}")
     
-    return references_dir / metadata_files[endpoint_type]
+    return pv_dir / metadata_files[endpoint_type]
 
 
 def load_metadata(endpoint_type: str) -> dict:
     """Load the metadata JSON file for a given endpoint type.
-    
+
     Args:
         endpoint_type: One of 'file', 'sample', or 'subject'
-        
+
     Returns:
         Dictionary containing field metadata with permissible values
     """
@@ -43,10 +43,10 @@ def load_metadata(endpoint_type: str) -> dict:
 
 def get_controlled_fields(endpoint_type: str) -> list[str]:
     """Get list of all controlled fields (fields with permissible values) for an endpoint type.
-    
+
     Args:
         endpoint_type: One of 'file', 'sample', or 'subject'
-        
+
     Returns:
         List of field names that have permissible values defined
     """
@@ -59,11 +59,11 @@ def get_controlled_fields(endpoint_type: str) -> list[str]:
 
 def get_permissible_values(endpoint_type: str, field: str) -> Optional[list[str]]:
     """Get permissible values for a specific field from metadata.
-    
+
     Args:
         endpoint_type: One of 'file', 'sample', or 'subject'
         field: The field name to get permissible values for
-        
+
     Returns:
         List of permissible values (as strings) or None if field has no permissible values
     """
@@ -81,12 +81,12 @@ def get_permissible_values(endpoint_type: str, field: str) -> Optional[list[str]
 
 def field_value_pair_exists(endpoint_type: str, field: str, value: str) -> bool:
     """Confirm that a field/value pair exists in the source metadata.
-    
+
     Args:
         endpoint_type: One of 'file', 'sample', or 'subject'
         field: The field name
         value: The value to verify
-        
+
     Returns:
         True if the field/value pair exists in metadata, False otherwise
     """
@@ -100,11 +100,11 @@ def field_value_pair_exists(endpoint_type: str, field: str, value: str) -> bool:
 
 def get_field_metadata(endpoint_type: str, field: str) -> Optional[dict]:
     """Get full metadata for a specific field including formal name, description, and permissible values.
-    
+
     Args:
         endpoint_type: One of 'file', 'sample', or 'subject'
         field: The field name
-        
+
     Returns:
         Dictionary with field metadata or None if field not found
     """

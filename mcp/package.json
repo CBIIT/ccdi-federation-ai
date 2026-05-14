@@ -5,7 +5,11 @@
   "type": "module",
   "main": "ccdi_mcp_server.js",
   "scripts": {
-    "start": "node ccdi_mcp_server.js"
+    "start": "node ccdi_mcp_server.js",
+    "inspect": "npx @modelcontextprotocol/inspector node ccdi_mcp_server.js"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.10.2"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.0",

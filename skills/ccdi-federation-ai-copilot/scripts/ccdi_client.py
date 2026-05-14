@@ -19,7 +19,7 @@ def read_only_get(
     base_url: str,
     path: str,
     params: dict | None = None,
-    timeout_seconds: int = 10,
+    timeout_seconds: int = 30,
     max_retries: int = 0,
     urlopen=None,
 ) -> dict:
@@ -36,12 +36,16 @@ def read_only_get(
         try:
             with urlopen(url, timeout=timeout_seconds) as response:
                 payload = response.read().decode('utf-8')
+                headers = dict(response.headers.items()) if hasattr(response, 'headers') else {}
+                status = getattr(response, 'status', None)
                 try:
                     parsed_payload = json.loads(payload)
                 except json.JSONDecodeError:
                     return {
                         'ok': False,
                         'url': url,
+                        'status': status,
+                        'headers': headers,
                         'payload': None,
                         'errors': ['invalid_json_response'],
                     }
@@ -49,6 +53,8 @@ def read_only_get(
                 return {
                     'ok': True,
                     'url': url,
+                    'status': status,
+                    'headers': headers,
                     'payload': parsed_payload,
                     'errors': [],
                 }
@@ -58,6 +64,8 @@ def read_only_get(
     return {
         'ok': False,
         'url': url,
+        'status': None,
+        'headers': {},
         'payload': None,
         'errors': [last_error] if last_error else ['unknown_error'],
     }

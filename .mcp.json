@@ -4,7 +4,7 @@
       "type": "stdio",
       "command": "node",
       "args": [
-        "/Users/cheny39/Documents/work/tmp/ccdi-federation-agentskill/mcp/ccdi_mcp_server.js"
+        "{local_path}/mcp/ccdi_mcp_server.js"
       ],
       "env": {}
     }

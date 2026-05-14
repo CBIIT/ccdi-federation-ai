@@ -1,13 +1,8 @@
----
-name: cohort-query-builder
-description: build and execute metadata-only ccdi federation cohort queries from natural-language cohort requests. use this skill when the user asks to find, define, review, run, or plan a cohort query; map cohort terms to ccdi fields or permissible values; normalize terms like rna sequencing, female, relapse, tumor samples, or vcf files into valid subject, sample, or file metadata filters; fetch cohort metadata from the api; summarize returned metadata; or explain what api endpoint and parameters were used. includes semantic permissible-value mapping inside the cohort query builder workflow, uses openapi.yml for route and parameter validation, and uses 100 results per page for live metadata api execution.
----
-
 # Cohort Query Builder
 
 ## Purpose
 
-Turn a natural-language cohort question into a metadata-only CCDI Federation cohort query, validate the route and supported parameters against `references/openapi.yml`, execute the live metadata API when enough API information is available, summarize the fetched response, and report the API endpoint and parameters used. Keep semantic permissible-value mapping inside this workflow as a required normalization phase when the request involves controlled values.
+Turn a natural-language cohort question into a metadata-only CCDI Federation cohort query, validate the route and supported parameters against `references/openapi.yml`, execute the live metadata API only when explicitly requested, summarize the fetched response, and report the API endpoint and parameters used. Keep semantic permissible-value mapping inside this workflow as a required normalization phase when the request involves controlled values.
 
 ## API configuration
 
@@ -16,14 +11,15 @@ Turn a natural-language cohort question into a metadata-only CCDI Federation coh
 - Preferred live execution path: the MCP server named `ccdi-federation` when it is available in the environment.
 - Local MCP availability check:
   - First check whether an MCP server named `ccdi-federation` is already available in the active tool environment.
-  - In this repository, a local MCP registration is also defined in `.mcp.json` under `mcpServers.ccdi-federation`.
-  - That server is implemented by `mcp/ccdi_mcp_server.js` and exposes read-only GET helpers over the CCDI Federation OpenAPI spec.
 - MCP tools exposed by `ccdi-federation`:
   - `list_operations`: enumerate available GET endpoints extracted from `openapi.yml`
   - `get_operation_schema`: inspect required and optional parameters for a specific API path
   - `call_operation`: execute a validated OpenAPI-backed GET call by API path
   - `call_raw_get`: execute a raw GET against the configured base URL when a validated path-based call is not sufficient
-- Use `openapi.yml` to confirm:
+- Non-MCP live execution fallback order:
+  - First fallback: `scripts/ccdi_client.py` via `read_only_get(...)` for metadata-only GET calls.
+  - Final fallback: the environment's web/API fetching capability when script execution is unavailable.
+- Use `references/openapi.yml` to confirm:
   - available endpoints
   - supported HTTP methods
   - supported query parameters
@@ -31,9 +27,9 @@ Turn a natural-language cohort question into a metadata-only CCDI Federation coh
   - documented page-size limits
   - response shape when available
 - use the following metadata files as the source of truth for semantic PV mapping and normalization:
-  - file endpoints' supported permissible-values reference to `references/pv/file-pv-metadata.json`
-  - sample endpoints' supported permissible-values reference to `references/pv/sample-pv-metadata.json`
-  - subject endpoints' supported permissible-values reference to `references/pv/subject-pv-metadata.json`
+  - file endpoints' supported permissible-values reference: `references/pv/file-pv-metadata.json`
+  - sample endpoints' supported permissible-values reference: `references/pv/sample-pv-metadata.json`
+  - subject endpoints' supported permissible-values reference: `references/pv/subject-pv-metadata.json`
 
 ## Default behavior
 
@@ -45,11 +41,12 @@ Turn a natural-language cohort question into a metadata-only CCDI Federation coh
   - use `get_operation_schema` to confirm required path and query parameters for the target route
   - use `call_operation` for normal validated metadata fetches by path
   - use `call_raw_get` only as a fallback for read-only GET requests that still need custom handling after route validation
-- If `ccdi-federation` is not available, fall back to the environment’s internal web/API fetching tool.
+- If `ccdi-federation` is not available, first fall back to `scripts/ccdi_client.py` for live metadata-only GET calls.
+- If script execution is unavailable, fall back to the environment's internal web/API fetching tool.
 - Use bundled Python scripts only as optional helpers for deterministic PV lookup/validation or as fallback execution tools when no internal API tool is available.
 - Do not run Python for every semantic PV mapping step when the relevant PV metadata is already available.
 - Keep execution metadata-only.
-- Use 10 results per page unless `openapi.yml` documents a different limit.
+- Use 10 results per page unless `references/openapi.yml` documents a different limit.
 - Default max pages: 3 unless the user requests more.
 - Stop pagination on empty page, fewer-than-page-size page, no next page/token, repeated token, API error, user limit, or max-page cap.
 - Summarize fetched API data before responding; do not dump raw full responses unless the user asks.
@@ -87,7 +84,9 @@ Turn a natural-language cohort question into a metadata-only CCDI Federation coh
       - `base_url`: optional override only when the user explicitly needs a non-default CCDI base URL
       - `timeout_seconds`, `max_retries`, and `strict_query_validation` as needed
     - Use `call_raw_get` only when a read-only GET call still cannot be expressed cleanly through `call_operation` after OpenAPI validation.
-  - If `ccdi-federation` is not available, use the environment's direct web/API fetching capability as the fallback execution path.
+  - If `ccdi-federation` is not available, use `scripts/ccdi_client.py` as the primary fallback execution path.
+    - Use `read_only_get(base_url, path, params, timeout_seconds, max_retries)` for metadata-only GET requests.
+  - If script execution is unavailable, use the environment's direct web/API fetching capability as the final fallback execution path.
    - Use metadata-only `GET` requests unless `openapi.yml` documents another read-only metadata method.
    - Request 10 results per page unless `openapi.yml` documents a smaller maximum.
    - Default max pages: 3 unless the user explicitly asks for more.
@@ -134,4 +133,3 @@ user term
 - "relapsed disease" -> sample.disease_phase = Relapse
 - "tumor samples" -> sample.tissue_type = Tumor
 - "variant files" -> file.type = VCF, if the user means variant call files
-The intended mapping flow is:
