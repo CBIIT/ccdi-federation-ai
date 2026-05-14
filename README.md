@@ -17,7 +17,7 @@ This repository provides components for AI-ready CCDI Federation metadata, inclu
 ## Skill Install instructions for developers:
 
 ```bash
-npx skills add CBIIT/ccdi-federation-agentskill
+npx skills add CBIIT/ccdi-federation-ai
 ```
 
 
