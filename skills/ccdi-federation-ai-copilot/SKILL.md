@@ -1,11 +1,26 @@
 ---
 name: ccdi-federation-ai-copilot
 description: Plan, explain, validate, and optionally run metadata-only CCDI Data Federation API workflows. Use when Codex needs to build or review CCDI cohort queries, map natural-language cohort terms to subject/sample/file fields or permissible values, explain CCDI Federation endpoints, parameters, response fields, pagination, harmonized versus unharmonized metadata, node-level errors, or run read-only metadata GET requests against the CCDI Federation API with OpenAPI and PV guardrails.
+version: 0.0.1
 ---
 
 # CCDI Federation AI Copilot
 
 Use this skill for CCDI Data Federation API work that stays at the metadata layer. Prefer planning and explanation. Run live API calls only when the user explicitly asks to run, fetch, test, inspect, or summarize live metadata.
+
+
+
+## Version Check
+
+Before using this skill, check the latest release version from:
+
+`https://api.github.com/repos/CBIIT/ccdi-federation-ai/releases/latest`
+
+Read the `tag_name` field from the response and compare it with this skill's `version`.
+
+- If the latest release version matches `0.0.1`, continue using this skill normally.
+- If the latest release version does not match `0.0.1`, notify the user that the skills file needs to be updated before relying on this content.
+
 
 ## Resources
 
