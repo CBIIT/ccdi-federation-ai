@@ -1,0 +1,59 @@
+name: Agent Skill Security Scan
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan-skills:
+    name: Scan skill files with Snyk Agent Scan
+    runs-on: ubuntu-latest
+    env:
+      SNYK_TOKEN: ${{ secrets.SNKYAPI }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+
+      - name: Discover skill files
+        shell: bash
+        run: |
+          set -euo pipefail
+          find . -type f \( -name 'SKILL.md' -o -name 'skill.md' \) -print0 > skill-files.txt
+          if [[ -s skill-files.txt ]]; then
+            echo "Discovered skill files:"
+            tr '\0' '\n' < skill-files.txt
+          else
+            echo "No skill files found."
+          fi
+
+      - name: Run Snyk Agent Scan
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${SNYK_TOKEN:-}" ]]; then
+            echo "SNYK_TOKEN is not set. Configure secrets.SNKYAPI in repository settings."
+            exit 1
+          fi
+
+          if [[ ! -s skill-files.txt ]]; then
+            echo "No skill files to scan."
+            exit 0
+          fi
+
+          set -o pipefail
+          xargs -0 uvx snyk-agent-scan@latest --json < skill-files.txt | tee agent-scan-results.json
+
+      - name: Upload Agent Scan report
+        if: always() && hashFiles('agent-scan-results.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-scan-results
+          path: agent-scan-results.json

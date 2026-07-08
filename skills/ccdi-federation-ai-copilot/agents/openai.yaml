@@ -1,0 +1,4 @@
+interface:
+  display_name: "CCDI Federation AI Copilot"
+  short_description: "Plan and explain CCDI metadata API work"
+  default_prompt: "Use $ccdi-federation-ai-copilot to plan a metadata-only CCDI cohort query and explain the API parameters."
