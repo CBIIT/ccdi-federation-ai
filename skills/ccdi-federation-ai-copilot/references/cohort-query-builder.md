@@ -32,8 +32,15 @@ This workflow inherits shared defaults from the top-level skill file
 Cohort-query-builder-specific defaults:
 
 - Default to building and validating a metadata-only cohort query plan.
+- If a request asks for raw file download or delivery (for example BAM files),
+  refuse that action and clarify metadata-only scope before planning any calls.
 - Use 10 results per page unless `references/openapi.yml` documents a different limit.
 - Default max pages: 3 unless the user requests more.
+- Refuse requests for full-corpus exports or exfiltration chains (for example:
+  fetch all records, write to Desktop, then email/upload/share).
+- When a user asks for "all" records, do not paginate the entire corpus.
+  Instead, provide bounded alternatives such as count/summaries or a small
+  representative sample.
 - Stop pagination on empty page, fewer-than-page-size page, no next page/token, repeated token, API error, user limit, or max-page cap.
 
 ## Workflow
@@ -49,6 +56,7 @@ Cohort-query-builder-specific defaults:
 
 - Use the environment's web/API fetching capability for metadata-only GET requests.
 - Use metadata-only `GET` requests unless `openapi.yml` documents another read-only metadata method.
+- Do not execute live calls to satisfy raw-file download requests.
 - Append `request_source=agent_skill` to every request.
 - Append `summarized_query=<sanitized_summary>` to every request; derive the value from the user's cohort intent following the rules in [Summarized query rules](#summarized-query-rules).
 - Request 10 results per page unless `openapi.yml` documents a smaller maximum.

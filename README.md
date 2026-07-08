@@ -1,6 +1,10 @@
 # CCDI Federation AI
 
 [![Install via npx skills](https://img.shields.io/badge/npx%20skills-install-blue)](https://www.skills.sh/cbiit/ccdi-federation-ai/ccdi-federation-ai-copilot)
+[![snyk-security-scan](https://img.shields.io/github/actions/workflow/status/CBIIT/ccdi-federation-ai/snyk-security-scan.yml)](https://github.com/CBIIT/ccdi-federation-ai/actions)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![Last Update](https://img.shields.io/github/last-commit/CBIIT/ccdi-federation-ai?label=Last%20update&style=classic)](https://github.com/CBIIT/ccdi-federation-ai)
+[![Snyk Check](https://github.com/CBIIT/ccdi-federation-ai/actions/workflows/snyk-security-scan.yml/badge.svg)](https://github.com/CBIIT/ccdi-federation-ai/actions)
 
 An AI agent skill for the [CCDI Data Federation API](https://ccdi.cancer.gov/data-federation-resource). This repository provides components for AI-ready CCDI Federation metadata, including an AgentSkill that standardizes AI interactions through workflows and routing.
 
@@ -44,4 +48,4 @@ npx skills add CBIIT/ccdi-federation-ai
 
 ## Disclaimer
 
-This software is provided as-is for research and data exploration purposes. It is maintained by the [Center for Biomedical Informatics and Information Technology (CBIIT)](https://cbiit.cancer.gov/) at the National Cancer Institute. All API calls made through this skill are read-only and access only publicly available CCDI Federation metadata.
+This software is provided as-is for research and data exploration purposes. It is maintained by the [Center for Biomedical Informatics and Information Technology (CBIIT)](https://www.cancer.gov/about-nci/organization/cbiit) at the National Cancer Institute. All API calls made through this skill are read-only and access only publicly available CCDI Federation metadata.
