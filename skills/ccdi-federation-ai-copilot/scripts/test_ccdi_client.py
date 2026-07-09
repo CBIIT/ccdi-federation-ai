@@ -68,7 +68,7 @@ class TestBuildRequestUrl(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
-# read_only_get request params
+# Read-only GET request params
 # ---------------------------------------------------------------------------
 
 class TestReadOnlyGetRequestParams(unittest.TestCase):
