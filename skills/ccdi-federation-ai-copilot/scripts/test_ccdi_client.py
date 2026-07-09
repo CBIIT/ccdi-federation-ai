@@ -1,12 +1,11 @@
-"""Tests for ccdi_client.py — request_source and summarized_query parameters."""
+"""Tests for ccdi_client.py."""
 
 import json
 import unittest
-from contextlib import contextmanager
 from io import BytesIO
 from urllib.parse import parse_qs, urlparse
 
-from ccdi_client import REQUEST_SOURCE, build_request_url, read_only_get
+from ccdi_client import build_request_url, read_only_get
 
 BASE_URL = 'https://federation-stage.ccdi.cancer.gov/api/v1/'
 SUBJECT_PATH = '/subject'
@@ -69,116 +68,27 @@ class TestBuildRequestUrl(unittest.TestCase):
 
 
 # ---------------------------------------------------------------------------
-# request_source
+# Read-only GET request params
 # ---------------------------------------------------------------------------
 
-class TestRequestSourceDefault(unittest.TestCase):
-    """request_source=agent_skill is appended by default."""
-
-    def _run(self, extra_params=None):
+class TestReadOnlyGetRequestParams(unittest.TestCase):
+    def test_none_params_produces_no_query_string(self):
         urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(BASE_URL, SUBJECT_PATH, params=extra_params, urlopen=urlopen)
-        return _query_params(captured['url'])
-
-    def test_request_source_present(self):
-        qs = self._run()
-        self.assertIn('request_source', qs)
-
-    def test_request_source_value_is_agent_skill(self):
-        qs = self._run()
-        self.assertEqual(qs['request_source'], ['agent_skill'])
-
-    def test_request_source_constant_equals_agent_skill(self):
-        self.assertEqual(REQUEST_SOURCE, 'agent_skill')
-
-    def test_request_source_present_alongside_other_params(self):
-        qs = self._run(extra_params={'sex': 'F', 'page': '1'})
-        self.assertIn('request_source', qs)
-        self.assertEqual(qs['request_source'], ['agent_skill'])
-        self.assertEqual(qs['sex'], ['F'])
-
-    def test_custom_request_source(self):
-        urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(BASE_URL, SUBJECT_PATH, urlopen=urlopen, request_source='custom_source')
-        qs = _query_params(captured['url'])
-        self.assertEqual(qs['request_source'], ['custom_source'])
+        read_only_get(BASE_URL, SUBJECT_PATH, params=None, urlopen=urlopen)
+        self.assertEqual(captured['url'], 'https://federation-stage.ccdi.cancer.gov/api/v1/subject')
 
     def test_original_params_not_mutated(self):
         original = {'sex': 'F'}
         urlopen, _ = _make_urlopen({'data': []})
         read_only_get(BASE_URL, SUBJECT_PATH, params=original, urlopen=urlopen)
-        self.assertNotIn('request_source', original)
+        self.assertEqual(original, {'sex': 'F'})
 
-    def test_none_params_produces_request_source(self):
-        """Calling with params=None still appends request_source."""
+    def test_supplied_params_are_sent(self):
         urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(BASE_URL, SUBJECT_PATH, params=None, urlopen=urlopen)
-        qs = _query_params(captured['url'])
-        self.assertIn('request_source', qs)
-
-
-# ---------------------------------------------------------------------------
-# summarized_query
-# ---------------------------------------------------------------------------
-
-class TestSummarizedQuery(unittest.TestCase):
-    """summarized_query is optional, included only when provided, and never contains raw prompts."""
-
-    def test_omitted_by_default(self):
-        urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(BASE_URL, SUBJECT_PATH, urlopen=urlopen)
-        qs = _query_params(captured['url'])
-        self.assertNotIn('summarized_query', qs)
-
-    def test_included_when_provided(self):
-        urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(
-            BASE_URL, SUBJECT_PATH, urlopen=urlopen,
-            summarized_query='pediatric subjects with osteosarcoma',
-        )
-        qs = _query_params(captured['url'])
-        self.assertIn('summarized_query', qs)
-        self.assertEqual(qs['summarized_query'], ['pediatric subjects with osteosarcoma'])
-
-    def test_none_omits_param(self):
-        urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(BASE_URL, SUBJECT_PATH, urlopen=urlopen, summarized_query=None)
-        qs = _query_params(captured['url'])
-        self.assertNotIn('summarized_query', qs)
-
-    def test_sanitized_summary_no_pii(self):
-        """A properly sanitized value contains no names, emails, or identifiers."""
-        sanitized = 'female subjects with diagnosis osteosarcoma'
-        self.assertNotIn('@', sanitized)
-        self.assertNotIn('John', sanitized)
-
-        urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(BASE_URL, SUBJECT_PATH, urlopen=urlopen, summarized_query=sanitized)
-        qs = _query_params(captured['url'])
-        self.assertEqual(qs['summarized_query'], [sanitized])
-
-    def test_summarized_query_alongside_request_source(self):
-        urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(
-            BASE_URL, SUBJECT_PATH, urlopen=urlopen,
-            summarized_query='RNA-seq samples tumor',
-        )
-        qs = _query_params(captured['url'])
-        self.assertIn('request_source', qs)
-        self.assertIn('summarized_query', qs)
-
-    def test_summarized_query_alongside_other_params(self):
-        urlopen, captured = _make_urlopen({'data': []})
-        read_only_get(
-            BASE_URL, SUBJECT_PATH,
-            params={'sex': 'F'},
-            urlopen=urlopen,
-            summarized_query='female subjects',
-        )
+        read_only_get(BASE_URL, SUBJECT_PATH, params={'sex': 'F', 'page': '1'}, urlopen=urlopen)
         qs = _query_params(captured['url'])
         self.assertEqual(qs['sex'], ['F'])
-        self.assertEqual(qs['summarized_query'], ['female subjects'])
-        self.assertEqual(qs['request_source'], ['agent_skill'])
+        self.assertEqual(qs['page'], ['1'])
 
 
 # ---------------------------------------------------------------------------
@@ -186,19 +96,19 @@ class TestSummarizedQuery(unittest.TestCase):
 # ---------------------------------------------------------------------------
 
 class TestReadOnlyGetReturnValue(unittest.TestCase):
-    def test_successful_response_includes_url_with_request_source(self):
+    def test_successful_response_includes_request_url(self):
         urlopen, _ = _make_urlopen({'data': [{'id': '1'}]})
         result = read_only_get(BASE_URL, SUBJECT_PATH, urlopen=urlopen)
         self.assertTrue(result['ok'])
-        self.assertIn('request_source=agent_skill', result['url'])
+        self.assertEqual(result['url'], 'https://federation-stage.ccdi.cancer.gov/api/v1/subject')
 
-    def test_network_error_includes_url_with_request_source(self):
+    def test_network_error_includes_request_url(self):
         def _failing_urlopen(url, timeout=30):
             raise OSError('connection refused')
 
         result = read_only_get(BASE_URL, SUBJECT_PATH, urlopen=_failing_urlopen)
         self.assertFalse(result['ok'])
-        self.assertIn('request_source=agent_skill', result['url'])
+        self.assertEqual(result['url'], 'https://federation-stage.ccdi.cancer.gov/api/v1/subject')
 
 
 if __name__ == '__main__':
