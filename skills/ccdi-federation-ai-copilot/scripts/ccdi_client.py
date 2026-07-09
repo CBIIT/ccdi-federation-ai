@@ -27,7 +27,8 @@ def read_only_get(
     Args:
         base_url: The base URL of the API (e.g. ``https://federation-stage.ccdi.cancer.gov/api/v1/``).
         path: The API path relative to *base_url*.
-        params: Optional query parameters to include in the request.
+        params: Optional query parameters to include in the request. No additional
+            query parameters are added automatically.
         timeout_seconds: Request timeout in seconds.
         max_retries: Number of additional retry attempts on failure.
         urlopen: Injectable URL opener for testing; defaults to :func:`urllib.request.urlopen`.
