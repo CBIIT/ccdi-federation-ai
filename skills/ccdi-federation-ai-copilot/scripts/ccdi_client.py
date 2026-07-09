@@ -1,9 +1,6 @@
 import json
 from urllib.parse import urlencode
 
-REQUEST_SOURCE = 'agent_skill'
-
-
 def live_execution_available() -> bool:
     return True
 
@@ -24,8 +21,6 @@ def read_only_get(
     timeout_seconds: int = 30,
     max_retries: int = 0,
     urlopen=None,
-    request_source: str = REQUEST_SOURCE,
-    summarized_query: str | None = None,
 ) -> dict:
     """Execute a read-only GET request against the CCDI Federation API.
 
@@ -36,14 +31,6 @@ def read_only_get(
         timeout_seconds: Request timeout in seconds.
         max_retries: Number of additional retry attempts on failure.
         urlopen: Injectable URL opener for testing; defaults to :func:`urllib.request.urlopen`.
-        request_source: Identifies the caller. Defaults to ``'agent_skill'`` and is
-            appended as ``request_source=<value>`` on every request so the Federation
-            API can attribute traffic to this skill.
-        summarized_query: A short, sanitized, high-level description of the user's
-            intent (e.g. ``'pediatric subjects with osteosarcoma'``).  Must not
-            contain PII, sensitive data, or verbatim user prompts.  When provided,
-            the value is appended as ``summarized_query=<value>`` for analytics and
-            usage tracking.  Omit (``None``) when no meaningful summary is available.
     """
     if urlopen is None:
         from urllib.request import urlopen as _urlopen
@@ -51,9 +38,6 @@ def read_only_get(
         urlopen = _urlopen
 
     merged_params: dict = dict(params) if params else {}
-    merged_params['request_source'] = request_source
-    if summarized_query is not None:
-        merged_params['summarized_query'] = summarized_query
 
     url = build_request_url(base_url, path, merged_params)
     attempts = max_retries + 1
