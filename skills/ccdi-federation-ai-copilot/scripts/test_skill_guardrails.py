@@ -8,6 +8,9 @@ SKILL_MD = Path(__file__).resolve().parents[1] / "SKILL.md"
 COHORT_QUERY_BUILDER_MD = (
     Path(__file__).resolve().parents[1] / "references" / "cohort-query-builder.md"
 )
+API_EXPLAINER_MD = Path(__file__).resolve().parents[1] / "references" / "api-explainer.md"
+SKILL_OPENAPI_YML = Path(__file__).resolve().parents[1] / "references" / "openapi.yml"
+DOCS_OPENAPI_YML = Path(__file__).resolve().parents[3] / "docs" / "reference" / "openapi.yml"
 
 
 class TestSkillGuardrails(unittest.TestCase):
@@ -33,6 +36,20 @@ class TestSkillGuardrails(unittest.TestCase):
         self.assertIn(
             "Do not execute live calls to satisfy raw-file download requests.", text
         )
+
+    def test_api_explainer_uses_runtime_hub_pagination_guidance(self):
+        text = API_EXPLAINER_MD.read_text(encoding="utf-8")
+        self.assertIn("`page` and `per_page` query parameters", text)
+        self.assertIn("`summary.counts.current` and `summary.counts.all`", text)
+        self.assertIn("Do not describe an HTTP `Link` response header", text)
+
+    def test_bundled_openapi_specs_do_not_document_link_header_pagination(self):
+        for path in (SKILL_OPENAPI_YML, DOCS_OPENAPI_YML):
+            text = path.read_text(encoding="utf-8")
+            self.assertNotIn(
+                "Links to URLs that may be of interest when paging through paginated responses.",
+                text,
+            )
 
 
 if __name__ == "__main__":

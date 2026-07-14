@@ -27,6 +27,13 @@ Use `openapi.yml` to confirm:
 - response schema or response examples when available
 - documented errors and status codes
 
+For federation hub paginated collection endpoints, explain pagination in terms of
+the `page` and `per_page` query parameters plus each node's
+`summary.counts.current` and `summary.counts.all` values in the aggregated JSON
+response body. Do not describe an HTTP `Link` response header for hub
+pagination unless bundled documentation is explicitly updated to match runtime
+behavior.
+
 Always use the following bundled PV metadata files as the authoritative source for permissible values:
 
 - `references/pv/subject-pv-metadata.json`
