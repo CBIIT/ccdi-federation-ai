@@ -7,7 +7,7 @@ from urllib.parse import parse_qs, urlparse
 
 from ccdi_client import build_request_url, read_only_get
 
-BASE_URL = 'https://federation-stage.ccdi.cancer.gov/api/v1/'
+BASE_URL = 'https://federation.ccdi.cancer.gov/api/v1/'
 SUBJECT_PATH = '/subject'
 
 
@@ -56,7 +56,7 @@ def _query_params(url: str) -> dict:
 class TestBuildRequestUrl(unittest.TestCase):
     def test_no_params(self):
         url = build_request_url(BASE_URL, SUBJECT_PATH)
-        self.assertEqual(url, 'https://federation-stage.ccdi.cancer.gov/api/v1/subject')
+        self.assertEqual(url, 'https://federation.ccdi.cancer.gov/api/v1/subject')
 
     def test_with_params(self):
         url = build_request_url(BASE_URL, SUBJECT_PATH, {'sex': 'F'})
@@ -75,7 +75,7 @@ class TestReadOnlyGetRequestParams(unittest.TestCase):
     def test_none_params_produces_no_query_string(self):
         urlopen, captured = _make_urlopen({'data': []})
         read_only_get(BASE_URL, SUBJECT_PATH, params=None, urlopen=urlopen)
-        self.assertEqual(captured['url'], 'https://federation-stage.ccdi.cancer.gov/api/v1/subject')
+        self.assertEqual(captured['url'], 'https://federation.ccdi.cancer.gov/api/v1/subject')
 
     def test_original_params_not_mutated(self):
         original = {'sex': 'F'}
@@ -100,7 +100,7 @@ class TestReadOnlyGetReturnValue(unittest.TestCase):
         urlopen, _ = _make_urlopen({'data': [{'id': '1'}]})
         result = read_only_get(BASE_URL, SUBJECT_PATH, urlopen=urlopen)
         self.assertTrue(result['ok'])
-        self.assertEqual(result['url'], 'https://federation-stage.ccdi.cancer.gov/api/v1/subject')
+        self.assertEqual(result['url'], 'https://federation.ccdi.cancer.gov/api/v1/subject')
 
     def test_network_error_includes_request_url(self):
         def _failing_urlopen(url, timeout=30):
@@ -108,7 +108,7 @@ class TestReadOnlyGetReturnValue(unittest.TestCase):
 
         result = read_only_get(BASE_URL, SUBJECT_PATH, urlopen=_failing_urlopen)
         self.assertFalse(result['ok'])
-        self.assertEqual(result['url'], 'https://federation-stage.ccdi.cancer.gov/api/v1/subject')
+        self.assertEqual(result['url'], 'https://federation.ccdi.cancer.gov/api/v1/subject')
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ Turn a natural-language cohort question into a metadata-only CCDI Federation coh
 
 ## API configuration
 
-- API base URL: `https://federation-stage.ccdi.cancer.gov/api/v1/`
+- API base URL: `https://federation.ccdi.cancer.gov/api/v1/`
 - API route and parameter source of truth: `references/openapi.yml`
 - Live execution: use the environment's web/API fetching capability for read-only GET calls.
 - Use `references/openapi.yml` to confirm:

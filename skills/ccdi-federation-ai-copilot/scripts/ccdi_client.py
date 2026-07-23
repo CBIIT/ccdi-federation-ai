@@ -25,7 +25,7 @@ def read_only_get(
     """Execute a read-only GET request against the CCDI Federation API.
 
     Args:
-        base_url: The base URL of the API (e.g. ``https://federation-stage.ccdi.cancer.gov/api/v1/``).
+        base_url: The base URL of the API (e.g. ``https://federation.ccdi.cancer.gov/api/v1/``).
         path: The API path relative to *base_url*.
         params: Optional query parameters to include in the request, such as
             endpoint-specific filters or pagination values.

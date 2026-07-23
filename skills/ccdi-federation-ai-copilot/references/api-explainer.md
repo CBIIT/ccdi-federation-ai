@@ -10,7 +10,7 @@ This skill is for explanation and onboarding. It helps users understand how the 
 
 ## API configuration
 
-- API host: `https://federation-stage.ccdi.cancer.gov/`
+- API host: `https://federation.ccdi.cancer.gov/`
 - API version base path: `/api/v1/`
 - Route and parameter source of truth: `references/openapi.yml`
 - Permissible-value source of truth: bundled PV metadata files (see below). The CCDI Federation API wiki (`https://github.com/CBIIT/ccdi-federation-api/wiki`) may be consulted for background context only — it does not override bundled PV metadata.
