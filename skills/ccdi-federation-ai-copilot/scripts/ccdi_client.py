@@ -66,6 +66,7 @@ _BLOCKED_IPS = {
     '169.254.169.254',
     '100.100.100.200',
 }
+_UNHARMONIZED_PREFIX = 'metadata.unharmonized.'
 
 
 def _error(url: str, error_code: str, status: int | None = None) -> dict:
@@ -143,7 +144,7 @@ def _validate_path_and_params(path: str, params: dict) -> str | None:
     for key in params:
         if key in allowed_params:
             continue
-        if key.startswith('metadata.unharmonized.') and len(key) > len('metadata.unharmonized.'):
+        if key.startswith(_UNHARMONIZED_PREFIX) and len(key) > len(_UNHARMONIZED_PREFIX):
             continue
         return 'unsupported_query_parameter'
 
