@@ -5,6 +5,15 @@ This directory contains documentation and reference materials for the CCDI Data 
 - **about.md**: Provides a detailed description and overview of the project.
 - **openapi.yml**: The official OpenAPI/Swagger specification for the API.
 - **[endpoint]-api-response.json**: Example JSON responses for specific API endpoints to assist with integration and testing.
+- **qag-copilot.pptx**: Slide deck demonstrating the Query Augmented Generation (QAG) tool.
+
+## Reference Asset Notes
+
+- The `qag-copilot.pptx` file has its embedded creator and last-modifier metadata removed.
+- The presentation contains two intentional public external hyperlinks:
+  - `https://www.biorxiv.org/content/10.1101/2025.09.02.673797v1.full.pdf`
+  - `https://qag.m3aicommons.org`
+- Some example API payloads intentionally include both `Site_ID` and `site_id` because the upstream CCDI Federation responses expose both spellings. PowerShell JSON cmdlets can treat keys case-insensitively, so prefer a case-sensitive parser or access the raw JSON text when working with these examples in PowerShell.
 
 ## Permissible Values (PV) Metadata
 
