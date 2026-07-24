@@ -3,7 +3,7 @@ name: Agent Skill Security Scan
 on:
   pull_request:
     paths-ignore:
-      - .github/workflows/**
+      - .github/workflows/snyk-security-scan.yml
 
 permissions:
   contents: read
