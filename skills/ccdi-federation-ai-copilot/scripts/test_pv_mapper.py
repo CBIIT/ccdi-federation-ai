@@ -14,7 +14,8 @@ _SPEC.loader.exec_module(pv_mapper)
 class TestPvMapper(unittest.TestCase):
     def test_get_metadata_path_valid_endpoint(self):
         path = pv_mapper._get_metadata_path("subject")
-        self.assertTrue(str(path).endswith("references/pv/subject-pv-metadata.json"))
+        expected = MODULE_PATH.parent.parent / "references" / "pv" / "subject-pv-metadata.json"
+        self.assertEqual(path, expected)
 
     def test_get_metadata_path_invalid_endpoint(self):
         with self.assertRaises(ValueError):
