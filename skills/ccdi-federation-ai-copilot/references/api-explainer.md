@@ -10,7 +10,7 @@ This skill is for explanation and onboarding. It helps users understand how the 
 
 ## API configuration
 
-- API host: `https://federation-stage.ccdi.cancer.gov/`
+- API host: `https://federation.ccdi.cancer.gov/`
 - API version base path: `/api/v1/`
 - Route and parameter source of truth: `references/openapi.yml`
 - Permissible-value source of truth: bundled PV metadata files (see below). The CCDI Federation API wiki (`https://github.com/CBIIT/ccdi-federation-api/wiki`) may be consulted for background context only — it does not override bundled PV metadata.
@@ -26,6 +26,13 @@ Use `openapi.yml` to confirm:
 - pagination behavior
 - response schema or response examples when available
 - documented errors and status codes
+
+For federation hub paginated collection endpoints, explain pagination in terms of
+the `page` and `per_page` query parameters plus each node's
+`summary.counts.current` and `summary.counts.all` values in the aggregated JSON
+response body. Do not describe an HTTP `Link` response header for hub
+pagination unless bundled documentation is explicitly updated to match runtime
+behavior.
 
 Always use the following bundled PV metadata files as the authoritative source for permissible values:
 
