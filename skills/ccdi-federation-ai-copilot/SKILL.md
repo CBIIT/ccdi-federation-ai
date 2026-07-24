@@ -85,6 +85,22 @@ Read the `tag_name` field from the response and compare it with this skill's `ve
 - Do not dump raw full API responses by default. Summarize first and include
   representative records only when useful.
 
+## Clarification Protocol
+
+- Before taking any action, fully understand the user's request. If any part of
+  the request is ambiguous, incomplete, or could be interpreted in more than one
+  way, ask for clarification and wait for confirmation before proceeding.
+- Do not act on unconfirmed assumptions. If you are unsure what the user is
+  asking for, state what you do not understand and ask a focused clarifying
+  question rather than guessing.
+- Once you have understood the request, briefly state your interpretation and
+  the approach you plan to take. Do not begin execution until the user confirms
+  or the plan is unambiguous.
+- During execution, if you encounter new information that introduces ambiguity
+  about what the user wants, pause and ask for clarification before continuing.
+  Do not pretend to understand or silently choose between competing
+  interpretations.
+
 ## Default Behavior
 
 - Default to planning and explanation mode.
