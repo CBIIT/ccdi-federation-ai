@@ -102,12 +102,12 @@ Remove from global scope:
 npx skills remove ccdi-federation-ai-copilot --global
 ```
 
-## Add `ccdi-federation-ai-copilot` to Codex or other AI agents
+## Add `ccdi-federation-ai-copilot` to ChatGPT or other AI agents
 
-Install this skill for Codex:
+Install this skill for ChatGPT:
 
 ```bash
-npx skills add CBIIT/ccdi-federation-ai --skill ccdi-federation-ai-copilot --agent codex
+npx skills add CBIIT/ccdi-federation-ai --skill ccdi-federation-ai-copilot --agent chatgpt
 ```
 
 Install this skill for another supported agent (example: Claude Code):
@@ -116,10 +116,10 @@ Install this skill for another supported agent (example: Claude Code):
 npx skills add CBIIT/ccdi-federation-ai --skill ccdi-federation-ai-copilot --agent claude-code
 ```
 
-Use the skill in Codex without installing it:
+Use the skill in ChatGPT without installing it:
 
 ```bash
-npx skills use CBIIT/ccdi-federation-ai@ccdi-federation-ai-copilot --agent codex
+npx skills use CBIIT/ccdi-federation-ai@ccdi-federation-ai-copilot --agent chatgpt
 ```
 
 If your local machine does not have the agent CLI installed, install that agent first, then re-run the command.

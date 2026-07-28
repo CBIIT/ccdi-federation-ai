@@ -2,7 +2,7 @@
 name: ccdi-federation-ai-copilot
 description: >-
   Plan, explain, validate, and optionally run metadata-only CCDI Data
-  Federation API workflows. Use when Codex needs to build or review CCDI
+  Federation API workflows. Use when ChatGPT needs to build or review CCDI
   cohort queries, map natural-language cohort terms to subject/sample/file
   fields or permissible values, explain CCDI Federation endpoints, parameters,
   response fields, pagination, harmonized versus unharmonized metadata,

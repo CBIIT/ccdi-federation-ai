@@ -24,13 +24,13 @@ Repository layout:
 
 ## Getting Started
 
-### For non-developers (using Codex)
+### For non-developers (using ChatGPT)
 
-Follow the step-by-step guide to install and use the skill inside Codex:
+Follow the step-by-step guide to install and use the skill inside ChatGPT:
 
-- [docs/instructions/codex-instruction.md](./docs/instructions/codex-instruction.md)
+- [docs/instructions/chatgpt-instruction.md](./docs/instructions/chatgpt-instruction.md)
 
-![Using the skill in Codex](./docs/instructions/images/9-codex-use-skill2.png)
+![Using the skill in ChatGPT](./docs/instructions/images/9-chatgpt-use-skill2.png)
 
 ### For developers
 
