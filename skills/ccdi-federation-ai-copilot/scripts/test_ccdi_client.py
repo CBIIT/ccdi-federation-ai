@@ -147,6 +147,10 @@ class TestReadOnlyGetSecurityValidation(unittest.TestCase):
         result = read_only_get('https://federation.ccdi.cancer.gov:notaport/api/v1/', SUBJECT_PATH)
         self.assertEqual(result['errors'], ['port_not_allowed'])
 
+    def test_rejects_malformed_port(self):
+        result = read_only_get('https://federation.ccdi.cancer.gov:notaport/api/v1/', SUBJECT_PATH)
+        self.assertEqual(result['errors'], ['invalid_port'])
+
     def test_rejects_private_ip_host(self):
         result = read_only_get('https://169.254.169.254/api/v1/', SUBJECT_PATH)
         self.assertEqual(result['errors'], ['blocked_host'])

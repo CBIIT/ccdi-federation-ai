@@ -57,15 +57,20 @@ _PATH_ALLOWLIST = (
     (re.compile(r'^/organization/[^/]+$'), set()),
 )
 
+# Hostnames that are always blocked regardless of IP resolution.
+# These include loopback aliases and cloud instance metadata endpoints
+# that should never be reachable from this client.
 _BLOCKED_HOSTNAMES = {
     'localhost',
     'metadata.google.internal',
     'metadata',
 }
-_BLOCKED_IPS = {
-    '169.254.169.254',
-    '100.100.100.200',
-}
+
+# Explicit IP addresses to block in addition to the broader checks in
+# _is_blocked_host (private, loopback, link-local, reserved, multicast, and
+# unspecified ranges).  Add any specific addresses here that are not already
+# covered by those categories.
+_BLOCKED_IPS: set[str] = set()
 _UNHARMONIZED_PREFIX = 'metadata.unharmonized.'
 
 
