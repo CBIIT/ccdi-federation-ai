@@ -117,7 +117,11 @@ def _validate_base_url(base_url: str) -> str | None:
     if host.lower() != ALLOWED_HOST:
         return 'external_host_not_allowed'
 
-    if parsed.port not in (None, 443):
+    try:
+        port = parsed.port
+    except ValueError:
+        return 'invalid_port'
+    if port not in (None, 443):
         return 'nonstandard_port_not_allowed'
     if parsed.query or parsed.fragment:
         return 'base_url_must_not_include_query_or_fragment'
