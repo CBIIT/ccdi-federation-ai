@@ -117,8 +117,8 @@ def _validate_base_url(base_url: str) -> str | None:
     if host.lower() != ALLOWED_HOST:
         return 'external_host_not_allowed'
 
-    if parsed.port not in (None, 443):
-        return 'nonstandard_port_not_allowed'
+    if parsed.port is not None:
+        return 'port_not_allowed'
     if parsed.query or parsed.fragment:
         return 'base_url_must_not_include_query_or_fragment'
     if parsed.path.rstrip('/') != '/api/v1':

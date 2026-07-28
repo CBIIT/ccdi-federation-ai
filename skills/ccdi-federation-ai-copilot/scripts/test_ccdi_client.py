@@ -135,9 +135,13 @@ class TestReadOnlyGetSecurityValidation(unittest.TestCase):
         result = read_only_get(credentialed_url, SUBJECT_PATH)
         self.assertEqual(result['errors'], ['credentials_not_allowed'])
 
-    def test_rejects_nonstandard_port(self):
+    def test_rejects_any_port(self):
         result = read_only_get('https://federation.ccdi.cancer.gov:444/api/v1/', SUBJECT_PATH)
-        self.assertEqual(result['errors'], ['nonstandard_port_not_allowed'])
+        self.assertEqual(result['errors'], ['port_not_allowed'])
+
+    def test_rejects_standard_https_port(self):
+        result = read_only_get('https://federation.ccdi.cancer.gov:443/api/v1/', SUBJECT_PATH)
+        self.assertEqual(result['errors'], ['port_not_allowed'])
 
     def test_rejects_private_ip_host(self):
         result = read_only_get('https://169.254.169.254/api/v1/', SUBJECT_PATH)
