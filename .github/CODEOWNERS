@@ -1,0 +1,3 @@
+# CODEOWNERS — require review for sensitive paths
+# Changes to GitHub Actions workflows require review from a repository owner or maintainer.
+.github/workflows/** @CBIIT/ccdi-federation-ai-maintainers

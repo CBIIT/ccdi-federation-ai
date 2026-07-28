@@ -91,6 +91,14 @@ The workflow can be triggered at any time from the **Actions** tab:
 
 ---
 
+## Workflow Change Protection
+
+Changes to `.github/workflows/snyk-security-scan.yml` (and all other workflow files) are protected by `.github/CODEOWNERS`. Any pull request that modifies a file under `.github/workflows/` will require an approving review from the `@CBIIT/ccdi-federation-ai-maintainers` team before it can be merged.
+
+The `paths-ignore` filter that previously excluded the workflow file itself from triggering scans has been removed. The security scan now runs on **all** pull requests, including those that modify the workflow, ensuring consistent coverage.
+
+---
+
 ## Maintenance Notes
 
 - The Snyk GitHub Action is pinned to `snyk/actions/node@v1.0.0`. Monitor [Snyk Actions releases](https://github.com/snyk/actions/releases) and update this tag when a new stable version is published.
