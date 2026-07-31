@@ -57,15 +57,20 @@ _PATH_ALLOWLIST = (
     (re.compile(r'^/organization/[^/]+$'), set()),
 )
 
+# Hostnames that are always blocked regardless of IP resolution.
+# These include loopback aliases and cloud instance metadata endpoints
+# that should never be reachable from this client.
 _BLOCKED_HOSTNAMES = {
     'localhost',
     'metadata.google.internal',
     'metadata',
 }
-_BLOCKED_IPS = {
-    '169.254.169.254',
-    '100.100.100.200',
-}
+
+# Explicit IP addresses to block in addition to the broader checks in
+# _is_blocked_host (private, loopback, link-local, reserved, multicast, and
+# unspecified ranges).  Add any specific addresses here that are not already
+# covered by those categories.
+_BLOCKED_IPS: set[str] = set()
 _UNHARMONIZED_PREFIX = 'metadata.unharmonized.'
 
 
@@ -117,8 +122,12 @@ def _validate_base_url(base_url: str) -> str | None:
     if host.lower() != ALLOWED_HOST:
         return 'external_host_not_allowed'
 
-    if parsed.port not in (None, 443):
-        return 'nonstandard_port_not_allowed'
+    try:
+        port = parsed.port
+    except ValueError:
+        return 'port_not_allowed'
+    if port is not None:
+        return 'port_not_allowed'
     if parsed.query or parsed.fragment:
         return 'base_url_must_not_include_query_or_fragment'
     if parsed.path.rstrip('/') != '/api/v1':
