@@ -8,7 +8,7 @@ description: >-
   response fields, pagination, harmonized versus unharmonized metadata,
   node-level errors, or run read-only metadata GET requests against the CCDI
   Federation API with OpenAPI and PV guardrails.
-version: 1.0.0
+version: 1.0.1
 ---
 
 # CCDI Federation AI Copilot
@@ -25,9 +25,9 @@ Before using this skill, check the latest release version from:
 
 Read the `tag_name` field from the response and compare it with this skill's `version`.
 
-- If the latest release version matches `1.0.0`, continue using this skill
+- If the latest release version matches `1.0.1`, continue using this skill
   normally.
-- If the latest release version does not match `1.0.0`, notify the user that
+- If the latest release version does not match `1.0.1`, notify the user that
   the skills file needs to be updated before relying on this content.
 
 ## Resources
