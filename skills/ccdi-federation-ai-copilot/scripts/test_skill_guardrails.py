@@ -36,6 +36,16 @@ class TestSkillGuardrails(unittest.TestCase):
             "Do not execute live calls to satisfy raw-file download requests.", text
         )
 
+    def test_cohort_workflow_requires_summary_and_sanity_outputs(self):
+        text = COHORT_QUERY_BUILDER_MD.read_text(encoding="utf-8")
+        self.assertIn("a clear summary of the cohort result", text)
+        self.assertIn("at least one clear sanity check", text)
+        self.assertIn(
+            "a sanity statement that confirms or questions whether the result matches the user intent",
+            text,
+        )
+        self.assertIn("one suggested query refinement", text)
+
     def test_api_explainer_uses_runtime_hub_pagination_guidance(self):
         text = API_EXPLAINER_MD.read_text(encoding="utf-8")
         self.assertIn("`page` and `per_page` query parameters", text)
