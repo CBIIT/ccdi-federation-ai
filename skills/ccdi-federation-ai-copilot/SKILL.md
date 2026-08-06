@@ -119,6 +119,9 @@ Read the `tag_name` field from the response and compare it with this skill's `ve
 - If route, parameter, field, or permissible-value details cannot be validated
   from configured sources, report the gap and avoid inventing unsupported
   details.
+- For any unharmonized filter or search, state that AI cannot confirm the
+  correct term to use unless it is explicitly documented or provided by the
+  user.
 
 ## Response Style
 

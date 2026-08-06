@@ -29,12 +29,27 @@ class TestSkillGuardrails(unittest.TestCase):
         self.assertIn("refuse raw-data fulfillment", text)
         self.assertIn("Do not begin bulk paging or manifest-export workflows", text)
 
+    def test_skill_md_handles_unharmonized_filter_search_terms(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn("For any unharmonized filter or search", text)
+        self.assertIn("AI cannot confirm the", text)
+
     def test_cohort_workflow_blocks_live_calls_for_raw_download_requests(self):
         text = COHORT_QUERY_BUILDER_MD.read_text(encoding="utf-8")
         self.assertIn("refuse that action and clarify metadata-only scope", text)
         self.assertIn(
             "Do not execute live calls to satisfy raw-file download requests.", text
         )
+
+    def test_cohort_workflow_requires_summary_and_sanity_outputs(self):
+        text = COHORT_QUERY_BUILDER_MD.read_text(encoding="utf-8")
+        self.assertIn("a clear summary of the cohort result", text)
+        self.assertIn("at least one clear sanity check", text)
+        self.assertIn(
+            "a sanity statement that confirms or questions whether the result matches the user intent",
+            text,
+        )
+        self.assertIn("one suggested query refinement", text)
 
     def test_api_explainer_uses_runtime_hub_pagination_guidance(self):
         text = API_EXPLAINER_MD.read_text(encoding="utf-8")
