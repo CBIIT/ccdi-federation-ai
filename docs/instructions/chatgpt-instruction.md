@@ -152,4 +152,3 @@ For example:
 ## References
 
 * [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
-* [Skills and Plugins documentation](https://learn.chatgpt.com/docs/skills-and-plugins)
