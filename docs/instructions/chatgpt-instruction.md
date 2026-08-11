@@ -13,7 +13,7 @@ This guide explains how to:
 
 ## Access ChatGPT
 
-Go to https://chatgpt.com/.
+Go to [ChatGPT](https://chatgpt.com/).
 
 ChatGPT is available through a supported web browser or the ChatGPT desktop application.
 
@@ -148,9 +148,6 @@ For example:
 > Review this CCDI metadata package and identify missing or invalid fields.
 
 ---
-
-
-
 
 ## References
 
