@@ -28,9 +28,9 @@ Repository layout:
 
 Follow the step-by-step guide to install and use the skill on Chatgpt:
 
-- [docs/instructions/codex-instruction.md](./docs/instructions/codex-instruction.md)
+- [docs/instructions/chatgpt-instruction.md](./docs/instructions/chatgpt-instruction.md)
 
-![Using the skill in Codex](./docs/instructions/images/9-codex-use-skill2.png)
+![Using the skill in chatgpt](./docs/instructions/images/9-codex-use-skill2.png)
 
 ### Use NPX to install a skill
 
