@@ -24,15 +24,15 @@ Repository layout:
 
 ## Getting Started
 
-### For non-developers (using Codex)
+### Install Skill from GUI
 
-Follow the step-by-step guide to install and use the skill inside Codex:
+Follow the step-by-step guide to install and use the skill on Chatgpt:
 
-- [docs/instructions/codex-instruction.md](./docs/instructions/codex-instruction.md)
+- [docs/instructions/chatgpt-instruction.md](./docs/instructions/chatgpt-instruction.md)
 
-![Using the skill in Codex](./docs/instructions/images/9-codex-use-skill2.png)
+![Using the skill in chatgpt](./docs/instructions/images/9-codex-use-skill2.png)
 
-### For developers
+### Use NPX to install a skill
 
 Install the skill bundle via [npx](https://docs.npmjs.com/cli/commands/npx):
 
