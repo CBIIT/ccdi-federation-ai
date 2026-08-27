@@ -50,9 +50,6 @@ Then follow up with:
 
 ChatGPT can use the same federation results to generate the visualization.
 
-## Tutorial Video
-
-[![Watch the Vimeo video](https://vumbnail.com/1221827407.jpg)](https://vimeo.com/1221827407)
 
 ## References
 
