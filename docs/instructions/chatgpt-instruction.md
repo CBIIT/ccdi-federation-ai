@@ -4,10 +4,9 @@ The **CCDI Federation AI Copilot Skill** allows ChatGPT to query the CCDI Data F
 
 ## Install the Skill
 
-1. Go to the **CCDI Federation AI GitHub repository**.
+1. Go to the <a href="https://github.com/CBIIT/ccdi-federation-ai" target="_blank"><strong>CCDI Federation AI GitHub repository</strong></a>.
 
-2. Download:
-   `ccdi-federation-ai-copilot.zip`
+2. Download: <a href="https://github.com/CBIIT/ccdi-federation-ai/blob/main/ccdi-federation-ai-copilot.zip" target="_blank"><code>ccdi-federation-ai-copilot.zip</code></a>
 
 3. Open **ChatGPT** and go to **Plugins → Skills**.
 
