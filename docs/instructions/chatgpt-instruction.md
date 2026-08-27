@@ -1,154 +1,53 @@
-# ChatGPT Skills: Installation, Management, and Usage Guide
+# Install the CCDI Federation AI Skill in ChatGPT
 
-This guide explains how to:
+The **CCDI Federation AI Copilot Skill** allows ChatGPT to query the CCDI Data Federation API and help analyze federation data.
 
-* Access ChatGPT
-* Sign in to your account
-* Create and install skills
-* Upload custom skills
-* Manage skills and plugins
-* Use skills effectively
+## Install the Skill
 
----
+1. Go to the <a href="https://github.com/CBIIT/ccdi-federation-ai" target="_blank"><strong>CCDI Federation AI GitHub repository</strong></a>.
 
-## Access ChatGPT
+2. Download: <a href="https://github.com/CBIIT/ccdi-federation-ai/blob/main/ccdi-federation-ai-copilot.zip" target="_blank"><code>ccdi-federation-ai-copilot.zip</code></a>
 
-Go to [ChatGPT](https://chatgpt.com/).
+3. Open **ChatGPT** and go to **Plugins → Skills**.
 
-ChatGPT is available through a supported web browser or the ChatGPT desktop application.
+4. Click the **Add** button in the top-right corner and choose Create skill. This will start a new chat with **Skill Creator** selected.
 
----
+5. Attach `ccdi-federation-ai-copilot.zip` to the chat.
 
-## Sign In
+6. Enter:
 
-Sign in using one of the available options:
+   `Install this agent skill into the Codex skill directory.`
 
-* Google
-* Apple
-* Microsoft
-* Email
-* Phone
+7. Wait for ChatGPT to confirm that the skill was installed.
 
-After signing in, you will enter the ChatGPT workspace.
+8. Go back to **Plugins → Skills** and verify that **CCDI Federation AI Copilot Skill** appears in the installed skills list.
 
-HHS users may sign in with their HHS email address to access features and resources available through their organization’s ChatGPT workspace.
+## Use the Skill
 
----
+Start a new chat and use the forward slash (/) to select the **CCDI Federation AI Copilot Skill**.
 
-## ChatGPT Workspace
+You can then ask questions in natural language, for example:
 
-The ChatGPT workspace allows you to:
+- `How many participants are in the federation?`
+- `How many samples does the federation have?`
+- `Count samples by federation node.`
+- `Give me a bar chart of the sample counts by node.`
 
-* Interact with ChatGPT through conversations
-* Use skills and plugins
-* Connect supported applications and services
-* Upload and work with files
-* Run reusable workflows
+The skill will determine the appropriate CCDI Federation API query, retrieve the data, and present the results in ChatGPT.
 
----
+## Example
 
-## Open the Plugins Panel
+Ask:
 
-From the ChatGPT sidebar:
+`How many samples does the federation have?`
 
-1. Click **Plugins**.
-2. Browse the available skills, plugins, and integrations.
-3. Select **Manage** to review or update installed items.
+Then follow up with:
 
-Available options may depend on your ChatGPT plan, workspace settings, and administrator permissions.
+`Give me a bar chart of this data.`
 
----
+ChatGPT can use the same federation results to generate the visualization.
 
-## Create a Skill
-
-### Option A: Use the ChatGPT Interface
-
-1. Open the **Plugins** panel.
-2. Click **Manage**.
-3. Click **Create**.
-4. Select **Create skill**.
-
-Follow the prompts to describe the skill’s purpose, instructions, resources, and expected output.
-
-### Option B: Use Skill Creator
-
-In the ChatGPT message box, enter:
-
-`@skill-creator`
-
-Then describe the skill you want to create, including:
-
-* The skill’s purpose
-* The workflow it should follow
-* The expected output
-* Any templates, examples, or restrictions it should use
-
-Skill Creator will help you build, review, and refine the skill.
-
----
-
-## Upload a Custom Skill Package
-
-To add a custom skill package:
-
-1. Open a new ChatGPT conversation.
-2. Attach or drag and drop the skill package—for example, `ccdi-federation-ai-copilot.zip`—into the conversation.
-3. Mention `@skill-creator`.
-4. Ask ChatGPT to review and install the uploaded skill.
-5. Follow any prompts to validate or complete the installation.
-
-ChatGPT can inspect the package, verify its contents, and help prepare the skill for installation and reuse.
-
----
-
-## Manage Skills
-
-To manage your installed skills:
-
-1. Open **Plugins** from the ChatGPT sidebar.
-2. Click **Manage**.
-3. Select the skill you want to review.
-
-Depending on your permissions, you may be able to:
-
-* View skill details
-* Enable or disable a skill
-* Edit a custom skill
-* Update or replace a skill
-* Remove a skill
-
-Some actions may require approval from your workspace administrator.
-
----
-
-## Use Skills in ChatGPT
-
-Skills provide ChatGPT with reusable instructions and supporting resources for specific tasks or workflows. ChatGPT may select an appropriate skill automatically when your request matches its purpose, or you can select one explicitly.
-
-### Explicit Invocation
-
-Mention the skill in your prompt using the `@` symbol.
-
-For example:
-
-`@ccdi-federation-ai-copilot`
-
-Then provide your request:
-
-> `@ccdi-federation-ai-copilot, review this metadata package and identify any validation issues.`
-
-Explicitly mentioning the skill helps ensure that ChatGPT uses it for the request.
-
-### Automatic Invocation
-
-You can also describe the task normally. If an installed skill clearly matches your request, ChatGPT may use it automatically.
-
-For example:
-
-> Review this CCDI metadata package and identify missing or invalid fields.
-
----
 
 ## References
 
-* [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
+- [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
