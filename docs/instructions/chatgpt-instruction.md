@@ -11,23 +11,21 @@ The **CCDI Federation AI Copilot Skill** allows ChatGPT to query the CCDI Data F
 
 3. Open **ChatGPT** and go to **Plugins → Skills**.
 
-4. Make sure the **Skill Creator** skill is available.
+4. Click the **Add** button in the top-right corner and choose Create skill. This will start a new chat with **Skill Creator** selected.
 
-5. Start a new **Work** chat and select **Skill Creator**.
+5. Attach `ccdi-federation-ai-copilot.zip` to the chat.
 
-6. Attach `ccdi-federation-ai-copilot.zip` to the chat.
-
-7. Enter:
+6. Enter:
 
    `Install this agent skill into the Codex skill directory.`
 
-8. Wait for ChatGPT to confirm that the skill was installed.
+7. Wait for ChatGPT to confirm that the skill was installed.
 
-9. Go back to **Plugins → Skills** and verify that **CCDI Federation AI Copilot Skill** appears in the installed skills list.
+8. Go back to **Plugins → Skills** and verify that **CCDI Federation AI Copilot Skill** appears in the installed skills list.
 
 ## Use the Skill
 
-Start a new chat and select the **CCDI Federation AI Copilot Skill**.
+Start a new chat and use the forward slash (/) to select the **CCDI Federation AI Copilot Skill**.
 
 You can then ask questions in natural language, for example:
 
