@@ -51,9 +51,14 @@ Then follow up with:
 ChatGPT can use the same federation results to generate the visualization.
 
 
-<div style="padding:60.91% 0 0 0;position:relative;"><iframe src="https://player.vimeo.com/video/1221827407?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="fedration-agent-skill-install"></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+## Tutorial Video
+<a href="https://vimeo.com/1221827407" target="_blank" rel="noopener noreferrer">
+  <img src="https://vumbnail.com/1221827407.jpg" alt="Watch the Vimeo video">
+</a>
+
+
 
 
 ## References
 
-* [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
+* [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)# 
