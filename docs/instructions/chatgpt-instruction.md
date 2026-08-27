@@ -50,15 +50,10 @@ Then follow up with:
 
 ChatGPT can use the same federation results to generate the visualization.
 
-
 ## Tutorial Video
-<a href="https://vimeo.com/1221827407" target="_blank" rel="noopener noreferrer">
-  <img src="https://vumbnail.com/1221827407.jpg" alt="Watch the Vimeo video">
-</a>
 
-
-
+[![Watch the Vimeo video](https://vumbnail.com/1221827407.jpg)](https://vimeo.com/1221827407)
 
 ## References
 
-* [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)# 
+- [Skills in ChatGPT](https://help.openai.com/en/articles/20001066-skills-in-chatgpt)
