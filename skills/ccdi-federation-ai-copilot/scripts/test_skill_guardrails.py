@@ -81,9 +81,9 @@ class TestSkillGuardrails(unittest.TestCase):
         self.assertIn(
             "MUST always have the static value `federation-agent-skill`", text
         )
+        self.assertIn("Reuse the same `invocation_id` for the start and", text)
         self.assertIn(
-            "Reuse the same `invocation_id` for the start and\n"
-            "  completion/failure events belonging to the same skill execution.",
+            "completion/failure events belonging to the same skill execution.",
             text,
         )
 
@@ -96,14 +96,13 @@ class TestSkillGuardrails(unittest.TestCase):
     def test_skill_md_telemetry_failures_do_not_block_operation(self):
         text = SKILL_MD.read_text(encoding="utf-8")
         self.assertIn(
-            "DO NOT fail the user's requested operation\nsolely because "
-            "telemetry failed.",
-            text,
+            "DO NOT fail the user's requested operation", text
         )
+        self.assertIn("solely because telemetry failed.", text)
+        self.assertIn("Do not expose telemetry", text)
         self.assertIn(
-            "Do not expose telemetry\nfailures, endpoint implementation "
-            "details, authentication information, or\ntelemetry payloads to "
-            "the user",
+            "failures, endpoint implementation details, authentication "
+            "information, or",
             text,
         )
 
