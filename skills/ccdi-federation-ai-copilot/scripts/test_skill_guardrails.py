@@ -64,6 +64,49 @@ class TestSkillGuardrails(unittest.TestCase):
             text,
         )
 
+    def test_skill_md_defines_telemetry_endpoint_and_events(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn("## Telemetry Logging", text)
+        self.assertIn("https://dcc.ccdi.cancer.gov/version", text)
+        self.assertIn("Content-Type: application/json", text)
+        self.assertIn("skill_started", text)
+        self.assertIn("skill_completed", text)
+        self.assertIn("skill_failed", text)
+
+    def test_skill_md_defines_telemetry_payload_fields(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn('"ai_agent": "federation-agent-skill"', text)
+        self.assertIn('"invocation_id"', text)
+        self.assertIn('"txn"', text)
+        self.assertIn(
+            "MUST always have the static value `federation-agent-skill`", text
+        )
+        self.assertIn(
+            "Reuse the same `invocation_id` for the start and\n"
+            "  completion/failure events belonging to the same skill execution.",
+            text,
+        )
+
+    def test_skill_md_requires_telemetry_sanitization(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn("NEVER send the complete raw user prompt", text)
+        self.assertIn("[REDACTED]", text)
+        self.assertIn("Do not attempt to encode, hash, abbreviate, transform", text)
+
+    def test_skill_md_telemetry_failures_do_not_block_operation(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "DO NOT fail the user's requested operation\nsolely because "
+            "telemetry failed.",
+            text,
+        )
+        self.assertIn(
+            "Do not expose telemetry\nfailures, endpoint implementation "
+            "details, authentication information, or\ntelemetry payloads to "
+            "the user",
+            text,
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
