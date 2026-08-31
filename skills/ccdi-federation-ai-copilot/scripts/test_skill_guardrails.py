@@ -10,6 +10,9 @@ COHORT_QUERY_BUILDER_MD = (
 )
 API_EXPLAINER_MD = Path(__file__).resolve().parents[1] / "references" / "api-explainer.md"
 SKILL_OPENAPI_YML = Path(__file__).resolve().parents[1] / "references" / "openapi.yml"
+TELEMETRY_LOGGING_MD = (
+    Path(__file__).resolve().parents[1] / "references" / "telemetry-logging.md"
+)
 
 
 class TestSkillGuardrails(unittest.TestCase):
@@ -67,14 +70,28 @@ class TestSkillGuardrails(unittest.TestCase):
     def test_skill_md_defines_telemetry_endpoint_and_events(self):
         text = SKILL_MD.read_text(encoding="utf-8")
         self.assertIn("## Telemetry Logging", text)
+        self.assertIn("references/telemetry-logging.md", text)
+        self.assertIn("subskill", text)
+
+    def test_skill_md_lists_telemetry_subskill_resource_and_trigger(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "Telemetry logging subskill: `references/telemetry-logging.md`", text
+        )
+        self.assertIn(
+            "Both workflows trigger the telemetry logging subskill", text
+        )
+
+    def test_telemetry_logging_subskill_defines_endpoint_and_events(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
         self.assertIn("https://dcc.ccdi.cancer.gov/version", text)
         self.assertIn("Content-Type: application/json", text)
         self.assertIn("skill_started", text)
         self.assertIn("skill_completed", text)
         self.assertIn("skill_failed", text)
 
-    def test_skill_md_defines_telemetry_payload_fields(self):
-        text = SKILL_MD.read_text(encoding="utf-8")
+    def test_telemetry_logging_subskill_defines_payload_fields(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
         self.assertIn('"ai_agent": "federation-agent-skill"', text)
         self.assertIn('"invocation_id"', text)
         self.assertIn('"txn"', text)
@@ -87,14 +104,14 @@ class TestSkillGuardrails(unittest.TestCase):
             text,
         )
 
-    def test_skill_md_requires_telemetry_sanitization(self):
-        text = SKILL_MD.read_text(encoding="utf-8")
+    def test_telemetry_logging_subskill_requires_sanitization(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
         self.assertIn("NEVER send the complete raw user prompt", text)
         self.assertIn("[REDACTED]", text)
         self.assertIn("Do not attempt to encode, hash, abbreviate, transform", text)
 
-    def test_skill_md_telemetry_failures_do_not_block_operation(self):
-        text = SKILL_MD.read_text(encoding="utf-8")
+    def test_telemetry_logging_subskill_failures_do_not_block_operation(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
         self.assertIn(
             "DO NOT fail the user's requested operation", text
         )
@@ -105,6 +122,30 @@ class TestSkillGuardrails(unittest.TestCase):
             "information, or",
             text,
         )
+
+    def test_cohort_workflow_triggers_telemetry_subskill(self):
+        text = COHORT_QUERY_BUILDER_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Start procedure", text
+        )
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Completion procedure",
+            text,
+        )
+        self.assertIn("telemetry logging subskill's Failure", text)
+        self.assertIn("references/telemetry-logging.md", text)
+
+    def test_api_explainer_triggers_telemetry_subskill(self):
+        text = API_EXPLAINER_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Start procedure", text
+        )
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Completion procedure",
+            text,
+        )
+        self.assertIn("telemetry logging subskill's Failure", text)
+        self.assertIn("references/telemetry-logging.md", text)
 
 
 if __name__ == "__main__":

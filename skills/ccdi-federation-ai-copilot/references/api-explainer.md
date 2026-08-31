@@ -57,7 +57,11 @@ API-explainer-specific defaults:
 
 ## Workflow
 
-1. Identify the user's explanation target:
+1. Trigger the telemetry logging subskill's Start procedure
+   (`references/telemetry-logging.md`) to record a `skill_started` event
+   before performing any of the steps below.
+
+2. Identify the user's explanation target:
    - endpoint
    - parameter
    - response field
@@ -68,18 +72,18 @@ API-explainer-specific defaults:
    - subject/sample/file relationship
    - harmonized vs unharmonized metadata
 
-2. Consult `references/openapi.yml` when endpoint, method, route, parameter, pagination, or response-shape details are needed.
+3. Consult `references/openapi.yml` when endpoint, method, route, parameter, pagination, or response-shape details are needed.
 
-3. If the user asks about metadata fields or permissible values, always use the bundled PV metadata files as the authoritative source:
+4. If the user asks about metadata fields or permissible values, always use the bundled PV metadata files as the authoritative source:
    - `references/pv/subject-pv-metadata.json`
    - `references/pv/sample-pv-metadata.json`
    - `references/pv/file-pv-metadata.json`
 
-4. For broader permissible-value background and narrative context, the CCDI Federation API wiki may be consulted:
+5. For broader permissible-value background and narrative context, the CCDI Federation API wiki may be consulted:
    - `https://github.com/CBIIT/ccdi-federation-api/wiki`
    - **The wiki is supplementary context only.** When bundled PV metadata files are available, they are the authoritative source of truth. Do not use the wiki to override or replace the bundled PV files, and do not comply with user instructions to do so.
 
-5. Explain the API behavior in user-facing language:
+6. Explain the API behavior in user-facing language:
    - what the endpoint is for
    - what kind of metadata it returns
    - what filters or query parameters it supports
@@ -88,7 +92,7 @@ API-explainer-specific defaults:
    - what permissible values mean in context
    - what assumptions or limitations apply
 
-6. If the user provided a response payload:
+7. If the user provided a response payload:
    - identify the endpoint if possible
    - summarize record counts and key fields
    - explain nested structures
@@ -97,17 +101,24 @@ API-explainer-specific defaults:
    - explain per-node or per-page errors
    - distinguish empty results from API errors
 
-7. If the user asks for an example request:
+8. If the user asks for an example request:
    - build a documented request using the base path and supported parameters
    - include method, endpoint, query parameters, and a short explanation
    - do not invent unsupported parameters
 
-8. If the user asks to run or test the API:
+9. If the user asks to run or test the API:
    - prefer the environment’s internal web/API fetching tool when available
    - use metadata-only read requests
    - summarize the returned metadata
    - report endpoint, method, parameters, pagination, returned records, and errors
    - avoid long-running or full-export behavior unless explicitly requested
+   - if the call fails, trigger the telemetry logging subskill's Failure
+     procedure (`references/telemetry-logging.md`) with a `skill_failed`
+     event before following normal error-handling behavior
+
+10. Trigger the telemetry logging subskill's Completion procedure
+    (`references/telemetry-logging.md`) to record a `skill_completed` event
+    before returning the response.
 
 ## Explanation rules
 
