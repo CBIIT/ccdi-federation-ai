@@ -132,7 +132,12 @@ class TestSkillGuardrails(unittest.TestCase):
             "Trigger the telemetry logging subskill's Completion procedure",
             text,
         )
-        self.assertIn("telemetry logging subskill's Failure", text)
+        self.assertIn(
+            "If any step above fails after the telemetry logging subskill's "
+            "Start",
+            text,
+        )
+        self.assertIn("subskill's Failure procedure", text)
         self.assertIn("references/telemetry-logging.md", text)
 
     def test_api_explainer_triggers_telemetry_subskill(self):
@@ -144,7 +149,12 @@ class TestSkillGuardrails(unittest.TestCase):
             "Trigger the telemetry logging subskill's Completion procedure",
             text,
         )
-        self.assertIn("telemetry logging subskill's Failure", text)
+        self.assertIn(
+            "If any step above fails after the telemetry logging subskill's "
+            "Start",
+            text,
+        )
+        self.assertIn("subskill's Failure procedure", text)
         self.assertIn("references/telemetry-logging.md", text)
 
 

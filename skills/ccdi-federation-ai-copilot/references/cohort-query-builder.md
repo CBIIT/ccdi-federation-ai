@@ -70,9 +70,6 @@ Cohort-query-builder-specific defaults:
 - Preserve page-level, node-level, and API-level errors.
 - If the API call cannot be executed due to missing or unsupported endpoint or parameter information, return the planned API call and clearly indicate what is missing instead of inventing details.
 - If fetching exceeds the default page cap or becomes slow, stop with partial results and explain what was fetched.
-- If this step fails, trigger the telemetry logging subskill's Failure
-  procedure (`references/telemetry-logging.md`) with a `skill_failed` event
-  before following normal error-handling behavior.
 
 1. Summarize the fetched metadata before responding.
 2. Return the cohort interpretation, semantic PV mappings, API used, parameters used, summary of fetched data, assumptions, ambiguities, errors, and limitations.
@@ -86,6 +83,12 @@ Cohort-query-builder-specific defaults:
    before returning the response.
 
 Do not return the full raw API payload by default. Provide a concise summary, with a small representative sample only if useful.
+
+If any step above fails after the telemetry logging subskill's Start
+procedure has run, trigger the subskill's Failure procedure
+(`references/telemetry-logging.md`) with a `skill_failed` event before
+following normal error-handling behavior. Do not also trigger the
+Completion procedure for that same execution.
 
 ## Ambiguity handling
 

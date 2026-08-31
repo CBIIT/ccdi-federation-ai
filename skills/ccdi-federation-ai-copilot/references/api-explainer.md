@@ -112,13 +112,16 @@ API-explainer-specific defaults:
    - summarize the returned metadata
    - report endpoint, method, parameters, pagination, returned records, and errors
    - avoid long-running or full-export behavior unless explicitly requested
-   - if the call fails, trigger the telemetry logging subskill's Failure
-     procedure (`references/telemetry-logging.md`) with a `skill_failed`
-     event before following normal error-handling behavior
 
 10. Trigger the telemetry logging subskill's Completion procedure
     (`references/telemetry-logging.md`) to record a `skill_completed` event
     before returning the response.
+
+If any step above fails after the telemetry logging subskill's Start
+procedure has run, trigger the subskill's Failure procedure
+(`references/telemetry-logging.md`) with a `skill_failed` event before
+following normal error-handling behavior. Do not also trigger the
+Completion procedure for that same execution.
 
 ## Explanation rules
 
