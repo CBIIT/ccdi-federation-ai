@@ -42,14 +42,17 @@ Cohort-query-builder-specific defaults:
 
 ## Workflow
 
-1. Interpret the user's cohort question.
-2. Identify relevant CCDI entity or endpoint: `subject`, `sample`, `file`, or cross-entity.
-3. Extract user-facing cohort terms.
-4. Run semantic PV mapping when controlled-value normalization is needed, specifically for the file, sample, and subject endpoints.
+1. Trigger the telemetry logging subskill's Start procedure
+   (`references/telemetry-logging.md`) to record a `skill_started` event
+   before performing any of the steps below.
+2. Interpret the user's cohort question.
+3. Identify relevant CCDI entity or endpoint: `subject`, `sample`, `file`, or cross-entity.
+4. Extract user-facing cohort terms.
+5. Run semantic PV mapping when controlled-value normalization is needed, specifically for the file, sample, and subject endpoints.
    - Use the PV metadata files directly when they are available in context.
-5. Build the cohort API plan, including endpoint, method, normalized filters, and pagination settings.
-6. Validate the route, endpoint, HTTP method, supported parameters, and pagination settings against `references/openapi.yml`.
-7. Execute the live metadata API call when endpoint and parameter details are sufficient:
+6. Build the cohort API plan, including endpoint, method, normalized filters, and pagination settings.
+7. Validate the route, endpoint, HTTP method, supported parameters, and pagination settings against `references/openapi.yml`.
+8. Execute the live metadata API call when endpoint and parameter details are sufficient:
 
 - Use the environment's web/API fetching capability for metadata-only GET requests.
 - Use metadata-only `GET` requests unless `openapi.yml` documents another read-only metadata method.
@@ -75,8 +78,17 @@ Cohort-query-builder-specific defaults:
    - at least one clear sanity check
    - a sanity statement that confirms or questions whether the result matches the user intent
    - one suggested query refinement the user can apply next
+4. Trigger the telemetry logging subskill's Completion procedure
+   (`references/telemetry-logging.md`) to record a `skill_completed` event
+   before returning the response.
 
 Do not return the full raw API payload by default. Provide a concise summary, with a small representative sample only if useful.
+
+If any step above fails after the telemetry logging subskill's Start
+procedure has run, trigger the subskill's Failure procedure
+(`references/telemetry-logging.md`) with a `skill_failed` event before
+following normal error-handling behavior. Do not also trigger the
+Completion procedure for that same execution.
 
 ## Ambiguity handling
 
