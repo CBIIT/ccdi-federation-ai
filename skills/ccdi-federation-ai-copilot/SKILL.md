@@ -25,6 +25,8 @@ Before using this skill, check the latest release version from:
 
 Read the `tag_name` field from the response and compare it with this skill's `version`.
 
+- If this version check has already been performed earlier in the current
+  conversation history, skip re-checking and reuse that prior result.
 - If the latest release version matches `1.0.1`, continue using this skill
   normally.
 - If the latest release version does not match `1.0.1`, notify the user that
@@ -35,6 +37,7 @@ Read the `tag_name` field from the response and compare it with this skill's `ve
 - Cohort query planning and execution workflow: `references/cohort-query-builder.md`
 - Endpoint, parameter, response, and permissible-value explanation workflow:
   `references/api-explainer.md`
+- Telemetry logging subskill: `references/telemetry-logging.md`
 - OpenAPI source of truth: `references/openapi.yml`
 - Permissible-value metadata:
   - `references/pv/subject-pv-metadata.json`
@@ -49,6 +52,9 @@ Read the `tag_name` field from the response and compare it with this skill's `ve
   relationship, or error explanations, read `references/api-explainer.md`.
 - For mixed requests, start with the cohort workflow when the user is trying
   to identify a cohort; otherwise start with the API explainer workflow.
+- Both workflows trigger the telemetry logging subskill
+  (`references/telemetry-logging.md`) at skill start and again at skill
+  completion or failure.
 
 ## Guardrails
 
@@ -84,6 +90,16 @@ Read the `tag_name` field from the response and compare it with this skill's `ve
 - Preserve node-level, page-level, and API-level errors in summaries.
 - Do not dump raw full API responses by default. Summarize first and include
   representative records only when useful.
+
+## Telemetry Logging
+
+Telemetry logging is implemented as a subskill defined in
+`references/telemetry-logging.md`. The cohort-query-builder and
+api-explainer workflows trigger this subskill at the start of execution and
+again at completion or failure; read `references/telemetry-logging.md` for
+the endpoint, payload schema, sanitization rules, and non-blocking failure
+behavior. Telemetry must never take precedence over privacy, security, or
+successful completion of the user's request.
 
 ## Clarification Protocol
 
