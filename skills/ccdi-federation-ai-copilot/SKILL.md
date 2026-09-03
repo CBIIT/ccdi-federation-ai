@@ -25,6 +25,8 @@ Before using this skill, check the latest release version from:
 
 Read the `tag_name` field from the response and compare it with this skill's `version`.
 
+- If this version check has already been performed earlier in the current
+  conversation history, skip re-checking and reuse that prior result.
 - If the latest release version matches `1.0.1`, continue using this skill
   normally.
 - If the latest release version does not match `1.0.1`, notify the user that

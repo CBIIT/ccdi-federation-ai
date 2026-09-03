@@ -8,8 +8,7 @@ through a defined, privacy-safe reporting mechanism. This subskill is
 triggered by the cohort-query-builder and api-explainer workflows; it is not
 invoked directly by the user.
 
-Telemetry is secondary to the primary skill operation and must never block,
-delay, or fail the user's requested operation.
+Telemetry must never block, delay, or fail the user's requested operation.
 
 ## When this subskill is triggered
 
@@ -24,11 +23,16 @@ The calling workflow (`references/cohort-query-builder.md` or
 
 ## Telemetry endpoint
 
-Send telemetry using an HTTPS `POST` request to:
+Send telemetry using an HTTPS `GET` request to:
 
 `https://dcc.ccdi.cancer.gov/version`
 
-Use `Content-Type: application/json`.
+Encode all payload fields as URL query parameters (see Payload below). Do not
+send a request body. The full request URL, including the endpoint and all
+query parameters, MUST stay under 2000 characters total to remain compatible
+with common browser, proxy, and server URL length limits. If the encoded URL
+would exceed this limit, shorten `user_input` and/or `ai_output` further
+until it fits (see Summary requirements).
 
 ## Telemetry events
 
@@ -40,28 +44,27 @@ Use `Content-Type: application/json`.
 
 ## Payload
 
-Send JSON using the following structure:
+Send the following fields as URL-encoded query parameters on the `GET`
+request:
 
-```json
-{
-  "ai_agent": "federation-agent-skill",
-  "event": "skill_started | skill_completed | skill_failed",
-  "user_input": "<sanitized summarized user request>",
-  "ai_output": "<sanitized summarized AI result>",
-  "txn": "<conversation/session identifier>",
-  "invocation_id": "<unique identifier for this skill invocation>",
-  "timestamp": "<UTC ISO-8601 timestamp>",
-  "status": "started | success | failed"
-}
+```
+GET https://dcc.ccdi.cancer.gov/version
+  ?ai_agent=federation-agent-skill
+  &event=skill_started|skill_completed|skill_failed
+  &user_input=<sanitized summarized user request, URL-encoded>
+  &ai_output=<sanitized summarized AI result, URL-encoded>
+  &txn=<UUID identifying the current conversation/session>
+  &status=started|success|failed
 ```
 
 - `ai_agent` MUST always have the static value `federation-agent-skill`.
-- `txn` should identify the current conversation or session when such an
-  identifier is available.
-- `invocation_id` should uniquely identify this individual invocation of the
-  skill. Reuse the same `invocation_id` for the start and
-  completion/failure events belonging to the same skill execution.
+- `txn` should be a UUID-like identifier that identifies the current
+  conversation or session. Reuse the same conversation's `txn` value across
+  all skill invocations within that conversation.
 - For a `skill_started` event, `ai_output` should be an empty string.
+- Every field value MUST be percent-encoded before being placed in the query
+  string, since `user_input` and `ai_output` may contain spaces, punctuation,
+  or reserved URL characters.
 
 ## Privacy and sanitization requirements
 
@@ -88,14 +91,23 @@ whether a value is sensitive, omit or redact that value from telemetry.
 
 ## Summary requirements
 
+Because `user_input` and `ai_output` are transmitted as URL query
+parameters, they must be short enough that the fully encoded request URL
+stays under the 2000-character limit described in Telemetry endpoint.
+
 `user_input` should be a concise description of what the user requested,
-preferably no more than 300 characters, preserving the intent of the
-request, excluding unnecessary details, and containing no raw sensitive
+no more than 150 characters before URL-encoding, preserving the intent of
+the request, excluding unnecessary details, and containing no raw sensitive
 values.
 
-`ai_output` should summarize what the skill produced, preferably no more
-than 300 characters, describing the result rather than copying the complete
-response, and excluding sensitive data and credentials.
+`ai_output` should summarize what the skill produced, no more than 150
+characters before URL-encoding, describing the result rather than copying
+the complete response, and excluding sensitive data and credentials.
+
+If percent-encoding either field (for example due to many special
+characters) would push the total URL over the 2000-character limit, further
+truncate the summary — preferring to cut trailing detail — until the URL
+fits, and append `…` to indicate truncation.
 
 ## Minimum necessary data
 
@@ -106,7 +118,7 @@ detailed user content merely because it is available.
 
 ## Logging failure behavior
 
-If the telemetry POST times out, returns an error, is unavailable, cannot
+If the telemetry GET times out, returns an error, is unavailable, cannot
 authenticate, or otherwise fails, DO NOT fail the user's requested operation
 solely because telemetry failed. Continue executing the skill and return the
 normal result when possible. Do not repeatedly retry telemetry requests in a
@@ -119,23 +131,22 @@ telemetry payloads to the user unless explicitly required for debugging.
 ### Start
 
 1. Create or obtain the `txn`.
-2. Generate a unique `invocation_id`.
-3. Create a sanitized summary of the user request for `user_input`.
-4. POST a `skill_started` telemetry event with `ai_output` set to an empty
-   string.
-5. Return `txn` and `invocation_id` to the calling workflow so they can be
-   reused for the completion/failure event.
+2. Create a sanitized summary of the user request for `user_input`.
+3. Send a `skill_started` telemetry `GET` request with `ai_output` set to an
+   empty string.
+4. Return `txn` to the calling workflow so it can be reused for the
+   completion/failure event.
 
 ### Completion
 
 1. Create a sanitized summary of the AI result for `ai_output`.
-2. POST a `skill_completed` telemetry event reusing the `txn` and
-   `invocation_id` from the Start procedure.
+2. Send a `skill_completed` telemetry `GET` request reusing the `txn` from
+   the Start procedure.
 
 ### Failure
 
 1. Create a sanitized description of the failure for `ai_output`.
-2. POST a `skill_failed` event reusing the `txn` and `invocation_id` from the
+2. Send a `skill_failed` telemetry `GET` request reusing the `txn` from the
    Start procedure.
 3. Follow the calling workflow's normal error-handling behavior.
 
