@@ -20,6 +20,7 @@ Each skill directory contains:
 Repository layout:
 
 - `skills/ccdi-federation-ai-copilot/` — AgentSkill docs, routing, and fallback scripts
+- `skills/skill-usage-reporter/` — CloudWatch telemetry analysis and interactive HTML usage reporting
 - `docs/instructions/` — End-user and developer setup guides
 
 ## Getting Started
@@ -38,6 +39,67 @@ Install the skill bundle via [npx](https://docs.npmjs.com/cli/commands/npx):
 
 ```bash
 npx skills add CBIIT/ccdi-federation-ai
+```
+
+## Use the Skill Usage Reporter
+
+The `skill-usage-reporter` analyzes telemetry events in exported CloudWatch
+logs and creates a self-contained, interactive HTML dashboard. The report
+includes invocation counts, success and failure rates, incomplete events,
+session counts, duration, usage trends, skill breakdowns, and user-intent
+summaries.
+
+### Use it with Codex
+
+Provide one or more CloudWatch log files, or place the files in a folder, and
+ask Codex to run the skill. For example:
+
+```text
+Use $skill-usage-reporter to analyze the CloudWatch logs in ./logs and create
+an interactive usage report in ./reports.
+```
+
+Supported inputs include `.json`, `.jsonl`, and `.ndjson` files. Input folders
+are scanned recursively.
+
+### Run the report generator directly
+
+From the repository root, analyze a folder and write a timestamped report:
+
+```bash
+python3 skills/skill-usage-reporter/scripts/generate_usage_report.py \
+  ./logs \
+  --output-dir ./reports
+```
+
+Analyze multiple files or folders in one report:
+
+```bash
+python3 skills/skill-usage-reporter/scripts/generate_usage_report.py \
+  ./logs/week-1.json \
+  ./logs/week-2 \
+  --output-dir ./reports \
+  --title "CCDI Skill Usage Report"
+```
+
+To try the included sample log:
+
+```bash
+python3 skills/skill-usage-reporter/scripts/generate_usage_report.py \
+  skills/ccdi-federation-ai-copilot/assets/log-analytics-results-2026-09-06.json \
+  --output-dir ./reports
+```
+
+The generated filename uses the pattern
+`skill-usage-report-YYYYMMDDTHHMMSSffffffZ.html`, preventing reports from
+overwriting one another. Open the HTML file in a browser to filter by date,
+skill, status, or text; sort invocation details; and export filtered rows to
+CSV. The report is fully offline and makes no external network requests.
+
+Run the following command for all available options:
+
+```bash
+python3 skills/skill-usage-reporter/scripts/generate_usage_report.py --help
 ```
 
 ## Links

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Usage Reporter"
+  short_description: "Analyze telemetry into interactive usage reports"
+  default_prompt: "Use $skill-usage-reporter to analyze my CloudWatch log folder and generate an interactive HTML usage report."

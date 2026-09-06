@@ -1,0 +1,282 @@
+[
+    {
+        "@timestamp": "2026-09-06T22:18:26.458Z",
+        "@message": "INFO:     10.208.24.65:1094 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:18:28.013Z",
+        "@message": "INFO:     10.208.28.178:13606 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:18:56.489Z",
+        "@message": "INFO:     10.208.24.65:32930 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:18:58.018Z",
+        "@message": "INFO:     10.208.28.178:2744 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:26.497Z",
+        "@message": "INFO:     10.208.24.65:25854 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:28.033Z",
+        "@message": "INFO:     10.208.28.178:39130 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:38.340Z",
+        "@message": "INFO:     10.208.24.65:2004 - \"GET /version?ai_agent=federation-agent-skill&event=skill_started&user_input=Retrieve+current+participant+counts+by+CCDI+Federation+node.&ai_output=&txn=54e872ca-7e52-4c31-b5ce-e74408bf05b3&timestamp=2026-09-06T00%3a00%3a00Z&status=started HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:46.232Z",
+        "@message": {
+            "path": "/api/v1/subject/summary",
+            "event": "Get subjects summary request",
+            "level": "info",
+            "timestamp": "2026-09-06T22:19:46.232310Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:46.232Z",
+        "@message": {
+            "cypher": "MATCH (p:participant)-[:of_participant]->(:consent_group)-[:of_consent_group]->(st:study)\n        WITH DISTINCT p.participant_id AS participant_id, st.study_id AS study_id\n        RETURN count(*) as total_count",
+            "params": {},
+            "event": "Executing get_subjects_summary Cypher query",
+            "level": "info",
+            "timestamp": "2026-09-06T22:19:46.232491Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:46.605Z",
+        "@message": {
+            "total_count": 59795,
+            "event": "Completed subjects summary",
+            "level": "info",
+            "timestamp": "2026-09-06T22:19:46.605311Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:46.605Z",
+        "@message": {
+            "total_count": 59795,
+            "event": "Get subjects summary response",
+            "level": "info",
+            "timestamp": "2026-09-06T22:19:46.605391Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:46.605Z",
+        "@message": "INFO:     10.208.24.65:6312 - \"GET /api/v1/subject/summary HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:56.526Z",
+        "@message": "INFO:     10.208.24.65:55832 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:58.061Z",
+        "@message": "INFO:     10.208.28.178:10248 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:19:59.245Z",
+        "@message": "INFO:     10.208.24.65:55838 - \"GET /version?ai_agent=federation-agent-skill&event=skill_completed&user_input=Retrieve+current+participant+counts+by+CCDI+Federation+node.&ai_output=Returned+participant+counts+for+seven+nodes+and+clarified+that+the+summed+total+may+not+be+deduplicated.&txn=54e872ca-7e52-4c31-b5ce-e74408bf05b3&timestamp=2026-09-06T22%3a19%3a59.061Z&status=success HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:16.424Z",
+        "@message": "INFO:     10.208.24.65:4206 - \"GET /version?ai_agent=federation-agent-skill&event=skill_started&user_input=Retrieve+current+CCDI+participant+distribution+by+harmonized+sex+field.&ai_output=&txn=54e872ca-7e52-4c31-b5ce-e74408bf05b3&timestamp=2026-09-06T22%3a20%3a16.271Z&status=started HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:26.541Z",
+        "@message": "INFO:     10.208.24.65:35998 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:28.067Z",
+        "@message": "INFO:     10.208.28.178:48890 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:35.091Z",
+        "@message": {
+            "field": "sex",
+            "path": "/api/v1/subject/by/sex/count",
+            "event": "Count subjects by field request",
+            "level": "info",
+            "timestamp": "2026-09-06T22:20:35.091127Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:35.091Z",
+        "@message": {
+            "field": "sex",
+            "params_count": 0,
+            "event": "Executing count_subjects_by_field Cypher queries",
+            "level": "info",
+            "timestamp": "2026-09-06T22:20:35.091270Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:35.411Z",
+        "@message": {
+            "field": "sex",
+            "total": 59795,
+            "missing": 0,
+            "values_count": 3,
+            "event": "Completed subject count by field",
+            "level": "info",
+            "timestamp": "2026-09-06T22:20:35.410995Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:35.411Z",
+        "@message": {
+            "field": "sex",
+            "total": 59795,
+            "missing": 0,
+            "values_count": 3,
+            "event": "Count subjects by field response",
+            "level": "info",
+            "timestamp": "2026-09-06T22:20:35.411081Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:35.411Z",
+        "@message": "INFO:     10.208.28.178:47468 - \"GET /api/v1/subject/by/sex/count HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:56.554Z",
+        "@message": "INFO:     10.208.24.65:10588 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:20:58.097Z",
+        "@message": "INFO:     10.208.28.178:9382 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:03.802Z",
+        "@message": "INFO:     10.208.24.65:10604 - \"GET /version?ai_agent=federation-agent-skill&event=skill_completed&user_input=Retrieve+current+CCDI+participant+distribution+by+harmonized+sex+field.&ai_output=Returned+overall+and+per-node+sex+distribution+with+unknown+and+missing+values+identified.&txn=54e872ca-7e52-4c31-b5ce-e74408bf05b3&timestamp=2026-09-06T22%3a21%3a03.518Z&status=success HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:12.345Z",
+        "@message": {
+            "path": "/api/v1/subject/summary",
+            "event": "Get subjects summary request",
+            "level": "info",
+            "timestamp": "2026-09-06T22:21:12.345341Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:12.345Z",
+        "@message": {
+            "cypher": "MATCH (p:participant)-[:of_participant]->(:consent_group)-[:of_consent_group]->(st:study)\n        WITH DISTINCT p.participant_id AS participant_id, st.study_id AS study_id\n        RETURN count(*) as total_count",
+            "params": {},
+            "event": "Executing get_subjects_summary Cypher query",
+            "level": "info",
+            "timestamp": "2026-09-06T22:21:12.345482Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:12.417Z",
+        "@message": {
+            "total_count": 59795,
+            "event": "Completed subjects summary",
+            "level": "info",
+            "timestamp": "2026-09-06T22:21:12.416941Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:12.417Z",
+        "@message": {
+            "total_count": 59795,
+            "event": "Get subjects summary response",
+            "level": "info",
+            "timestamp": "2026-09-06T22:21:12.417023Z"
+        },
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:12.417Z",
+        "@message": "INFO:     10.208.28.178:16102 - \"GET /api/v1/subject/summary HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:26.579Z",
+        "@message": "INFO:     10.208.24.65:59834 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:28.099Z",
+        "@message": "INFO:     10.208.28.178:29012 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:56.610Z",
+        "@message": "INFO:     10.208.24.65:1474 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    },
+    {
+        "@timestamp": "2026-09-06T22:21:58.129Z",
+        "@message": "INFO:     10.208.28.178:7696 - \"GET / HTTP/1.1\" 200 OK",
+        "@logStream": "ccdi-federation-prod-federation-dcc-rest-api/federationDCCRestApi/165546e340b34a448174ab4ba1ffb760",
+        "@logGroup": "427244650436:ccdi-federation-prod-memgraph-federationDCCRestApiTaskDeffederationDCCRestApiLogGroup0AACF8B2-brGqTQFlnOZj"
+    }
+]
