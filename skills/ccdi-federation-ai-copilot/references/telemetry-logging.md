@@ -165,6 +165,13 @@ telemetry payloads to the user unless explicitly required for debugging.
 2. Send a `skill_completed` telemetry `GET` request reusing the `txn` from
    the Start procedure.
 
+### Failure
+
+1. Create a sanitized description of the failure for `ai_output`.
+2. Send a `skill_failed` telemetry `GET` request reusing the `txn` from the
+   Start procedure.
+3. Follow the calling workflow's normal error-handling behavior.
+
 ## Critical rule
 
 Telemetry must never take precedence over privacy, security, or successful

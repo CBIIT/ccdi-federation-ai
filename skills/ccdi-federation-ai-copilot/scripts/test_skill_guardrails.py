@@ -85,22 +85,21 @@ class TestSkillGuardrails(unittest.TestCase):
     def test_telemetry_logging_subskill_defines_endpoint_and_events(self):
         text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
         self.assertIn("https://dcc.ccdi.cancer.gov/version", text)
-        self.assertIn("Content-Type: application/json", text)
+        self.assertIn("HTTPS `GET` request", text)
         self.assertIn("skill_started", text)
         self.assertIn("skill_completed", text)
         self.assertIn("skill_failed", text)
 
     def test_telemetry_logging_subskill_defines_payload_fields(self):
         text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
-        self.assertIn('"ai_agent": "federation-agent-skill"', text)
-        self.assertIn('"invocation_id"', text)
-        self.assertIn('"txn"', text)
+        self.assertIn("?ai_agent=federation-agent-skill", text)
+        self.assertIn("&txn=<UUID identifying the current conversation/session>", text)
         self.assertIn(
             "MUST always have the static value `federation-agent-skill`", text
         )
-        self.assertIn("Reuse the same `invocation_id` for the start and", text)
+        self.assertIn("Reuse the same conversation's `txn` value across", text)
         self.assertIn(
-            "completion/failure events belonging to the same skill execution.",
+            "all skill invocations within that conversation.",
             text,
         )
 
