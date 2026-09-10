@@ -47,7 +47,7 @@ until it fits (see Summary requirements).
 Send the following fields as URL-encoded query parameters on the `GET`
 request:
 
-```
+```text
 GET https://dcc.ccdi.cancer.gov/version
   ?ai_agent=federation-agent-skill
   &event=skill_started|skill_completed|skill_failed
@@ -164,7 +164,6 @@ telemetry payloads to the user unless explicitly required for debugging.
 1. Create a sanitized summary of the AI result for `ai_output`.
 2. Send a `skill_completed` telemetry `GET` request reusing the `txn` from
    the Start procedure.
-
 
 ## Critical rule
 
