@@ -54,43 +54,40 @@ Cohort-query-builder-specific defaults:
 7. Validate the route, endpoint, HTTP method, supported parameters, and pagination settings against `references/openapi.yml`.
 8. Execute the live metadata API call when endpoint and parameter details are sufficient:
 
-- Use the environment's web/API fetching capability for metadata-only GET requests.
-- Use metadata-only `GET` requests unless `openapi.yml` documents another read-only metadata method.
-- Do not execute live calls to satisfy raw-file download requests.
-- Request 10 results per page unless `openapi.yml` documents a smaller maximum.
-- Default max pages: 3 unless the user explicitly asks for more.
-  - Stop pagination when:
-    - the response has no records,
-    - the response has fewer than the requested page size,
-    - the API returns no next page or next token,
-    - a page token repeats,
-    - an API error occurs,
-    - the user-requested limit is reached,
-    - or the max-page safety cap is reached.
-- Preserve page-level, node-level, and API-level errors.
-- If the API call cannot be executed due to missing or unsupported endpoint or parameter information, return the planned API call and clearly indicate what is missing instead of inventing details.
-- If fetching exceeds the default page cap or becomes slow, stop with partial results and explain what was fetched.
+   - Use the environment's web/API fetching capability for metadata-only GET requests.
+   - Use metadata-only `GET` requests unless `openapi.yml` documents another read-only metadata method.
+   - Do not execute live calls to satisfy raw-file download requests.
+   - Request 10 results per page unless `openapi.yml` documents a smaller maximum.
+   - Default max pages: 3 unless the user explicitly asks for more.
+     - Stop pagination when:
+       - the response has no records,
+       - the response has fewer than the requested page size,
+       - the API returns no next page or next token,
+       - a page token repeats,
+       - an API error occurs,
+       - the user-requested limit is reached,
+       - or the max-page safety cap is reached.
+   - Preserve page-level, node-level, and API-level errors.
+   - If the API call cannot be executed due to missing or unsupported endpoint or parameter information, return the planned API call and clearly indicate what is missing instead of inventing details.
+   - If fetching exceeds the default page cap or becomes slow, stop with partial results and explain what was fetched.
 
-   1. Summarize the fetched metadata before responding.
-   2. Return the cohort interpretation, semantic PV mappings, API used, parameters used, summary of fetched data, assumptions, ambiguities, errors, and limitations.
-   3. Include all of the following response elements:
-
-      - a clear summary of the cohort result
-      - at least one clear sanity check
-      - a sanity statement that confirms or questions whether the result matches the user intent
-      - one suggested query refinement the user can apply next
-
-   4. Trigger the telemetry logging subskill's Completion procedure
-      (`references/telemetry-logging.md`) to record a `skill_completed` event
-      before returning the response.
+9. Summarize the fetched metadata before responding.
+10. Return the cohort interpretation, semantic PV mappings, API used, parameters used, summary of fetched data, assumptions, ambiguities, errors, and limitations.
+11. Include all of the following response elements:
+    - a clear summary of the cohort result
+    - at least one clear sanity check
+    - a sanity statement that confirms or questions whether the result matches the user intent
+    - one suggested query refinement the user can apply next
+12. Trigger the telemetry logging subskill's Completion procedure
+    (`references/telemetry-logging.md`) to record a `skill_completed` event
+    before returning the response.
+13. If any step above fails after the telemetry logging subskill's Start
+    procedure has run, trigger the subskill's Failure procedure
+    (`references/telemetry-logging.md`) with a `skill_failed` event before
+    following normal error-handling behavior. Do not also trigger the
+    Completion procedure for that same execution.
 
 Do not return the full raw API payload by default. Provide a concise summary, with a small representative sample only if useful.
-
-If any step above fails after the telemetry logging subskill's Start
-procedure has run, trigger the subskill's Failure procedure
-(`references/telemetry-logging.md`) with a `skill_failed` event before
-following normal error-handling behavior. Do not also trigger the
-Completion procedure for that same execution.
 
 ## Ambiguity handling
 
