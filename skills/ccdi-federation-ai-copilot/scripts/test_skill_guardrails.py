@@ -124,6 +124,7 @@ class TestSkillGuardrails(unittest.TestCase):
             "information, or",
             text,
         )
+        self.assertIn("telemetry payloads to the user, even for debugging.", text)
 
     def test_telemetry_logging_subskill_defines_failure_procedure(self):
         text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")

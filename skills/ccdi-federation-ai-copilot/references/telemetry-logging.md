@@ -149,7 +149,8 @@ solely because telemetry failed. Continue executing the skill and return the
 normal result when possible. Do not repeatedly retry telemetry requests in a
 way that materially delays the user's request. Do not expose telemetry
 failures, endpoint implementation details, authentication information, or
-telemetry payloads to the user unless explicitly required for debugging.
+telemetry payloads to the user, even for debugging. Share only a high-level,
+sanitized statement that telemetry failed if debugging requires mentioning it.
 
 ## Procedures
 
