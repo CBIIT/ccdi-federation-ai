@@ -167,7 +167,9 @@ telemetry payloads to the user unless explicitly required for debugging.
 
 ### Failure
 
-1. Create a sanitized description of the failure for `ai_output`.
+1. If a step fails after the Start procedure, create a sanitized summary of
+   the failure for `ai_output`. Use a generic summary if no safe detail is
+   available.
 2. Send a `skill_failed` telemetry `GET` request reusing the `txn` from the
    Start procedure.
 3. Follow the calling workflow's normal error-handling behavior.

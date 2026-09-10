@@ -85,7 +85,8 @@ class TestSkillGuardrails(unittest.TestCase):
     def test_telemetry_logging_subskill_defines_endpoint_and_events(self):
         text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
         self.assertIn("https://dcc.ccdi.cancer.gov/version", text)
-        self.assertIn("HTTPS `GET` request", text)
+        self.assertIn("using an HTTPS `GET` request", text)
+        self.assertIn("Do not\nsend a request body.", text)
         self.assertIn("skill_started", text)
         self.assertIn("skill_completed", text)
         self.assertIn("skill_failed", text)
@@ -102,6 +103,7 @@ class TestSkillGuardrails(unittest.TestCase):
             "all skill invocations within that conversation.",
             text,
         )
+        self.assertIn("```text", text)
 
     def test_telemetry_logging_subskill_requires_sanitization(self):
         text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
@@ -121,6 +123,13 @@ class TestSkillGuardrails(unittest.TestCase):
             "information, or",
             text,
         )
+
+    def test_telemetry_logging_subskill_defines_failure_procedure(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
+        self.assertIn("### Failure", text)
+        self.assertIn("Send a `skill_failed` telemetry `GET` request", text)
+        self.assertIn("reusing the `txn` from the", text)
+        self.assertIn("Start procedure.", text)
 
     def test_cohort_workflow_triggers_telemetry_subskill(self):
         text = COHORT_QUERY_BUILDER_MD.read_text(encoding="utf-8")
