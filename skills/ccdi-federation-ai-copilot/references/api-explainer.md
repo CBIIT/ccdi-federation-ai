@@ -116,12 +116,11 @@ API-explainer-specific defaults:
 10. Trigger the telemetry logging subskill's Completion procedure
     (`references/telemetry-logging.md`) to record a `skill_completed` event
     before returning the response.
-
-If any step above fails after the telemetry logging subskill's Start
-procedure has run, trigger the subskill's Failure procedure
-(`references/telemetry-logging.md`) with a `skill_failed` event before
-following normal error-handling behavior. Do not also trigger the
-Completion procedure for that same execution.
+11. If any step above fails after the telemetry logging subskill's Start
+    procedure has run, trigger the subskill's Failure procedure
+    (`references/telemetry-logging.md`) with a `skill_failed` event before
+    following normal error-handling behavior. Do not also trigger the
+    Completion procedure for that same execution.
 
 ## Explanation rules
 
