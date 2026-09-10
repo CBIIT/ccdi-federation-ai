@@ -10,6 +10,9 @@ COHORT_QUERY_BUILDER_MD = (
 )
 API_EXPLAINER_MD = Path(__file__).resolve().parents[1] / "references" / "api-explainer.md"
 SKILL_OPENAPI_YML = Path(__file__).resolve().parents[1] / "references" / "openapi.yml"
+TELEMETRY_LOGGING_MD = (
+    Path(__file__).resolve().parents[1] / "references" / "telemetry-logging.md"
+)
 
 
 class TestSkillGuardrails(unittest.TestCase):
@@ -63,6 +66,106 @@ class TestSkillGuardrails(unittest.TestCase):
             "Links to URLs that may be of interest when paging through paginated responses.",
             text,
         )
+
+    def test_skill_md_defines_telemetry_endpoint_and_events(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn("## Telemetry Logging", text)
+        self.assertIn("references/telemetry-logging.md", text)
+        self.assertIn("subskill", text)
+
+    def test_skill_md_lists_telemetry_subskill_resource_and_trigger(self):
+        text = SKILL_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "Telemetry logging subskill: `references/telemetry-logging.md`", text
+        )
+        self.assertIn(
+            "Both workflows trigger the telemetry logging subskill", text
+        )
+
+    def test_telemetry_logging_subskill_defines_endpoint_and_events(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
+        self.assertIn("https://dcc.ccdi.cancer.gov/version", text)
+        self.assertIn("using an HTTPS `GET` request", text)
+        self.assertIn("Do not", text)
+        self.assertIn("send a request body.", text)
+        self.assertIn("skill_started", text)
+        self.assertIn("skill_completed", text)
+        self.assertIn("skill_failed", text)
+
+    def test_telemetry_logging_subskill_defines_payload_fields(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
+        self.assertIn("?ai_agent=federation-agent-skill", text)
+        self.assertIn("&txn=<UUID identifying the current conversation/session>", text)
+        self.assertIn(
+            "MUST always have the static value `federation-agent-skill`", text
+        )
+        self.assertIn("Reuse the same conversation's `txn` value across", text)
+        self.assertIn(
+            "all skill invocations within that conversation.",
+            text,
+        )
+        self.assertIn("```text", text)
+
+    def test_telemetry_logging_subskill_requires_sanitization(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
+        self.assertIn("NEVER send the complete raw user prompt", text)
+        self.assertIn("[REDACTED]", text)
+        self.assertIn("Do not attempt to encode, hash, abbreviate, transform", text)
+
+    def test_telemetry_logging_subskill_failures_do_not_block_operation(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "DO NOT fail the user's requested operation", text
+        )
+        self.assertIn("solely because telemetry failed.", text)
+        self.assertIn("Do not expose telemetry", text)
+        self.assertIn(
+            "failures, endpoint implementation details, authentication "
+            "information, or",
+            text,
+        )
+        self.assertIn("telemetry payloads to the user, even for debugging.", text)
+
+    def test_telemetry_logging_subskill_defines_failure_procedure(self):
+        text = TELEMETRY_LOGGING_MD.read_text(encoding="utf-8")
+        self.assertIn("### Failure", text)
+        self.assertIn("Send a `skill_failed` telemetry `GET` request", text)
+        self.assertIn("reusing the `txn` from the", text)
+        self.assertIn("Start procedure.", text)
+
+    def test_cohort_workflow_triggers_telemetry_subskill(self):
+        text = COHORT_QUERY_BUILDER_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Start procedure", text
+        )
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Completion procedure",
+            text,
+        )
+        self.assertIn(
+            "If any step above fails after the telemetry logging subskill's "
+            "Start",
+            text,
+        )
+        self.assertIn("subskill's Failure procedure", text)
+        self.assertIn("references/telemetry-logging.md", text)
+
+    def test_api_explainer_triggers_telemetry_subskill(self):
+        text = API_EXPLAINER_MD.read_text(encoding="utf-8")
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Start procedure", text
+        )
+        self.assertIn(
+            "Trigger the telemetry logging subskill's Completion procedure",
+            text,
+        )
+        self.assertIn(
+            "If any step above fails after the telemetry logging subskill's "
+            "Start",
+            text,
+        )
+        self.assertIn("subskill's Failure procedure", text)
+        self.assertIn("references/telemetry-logging.md", text)
 
 
 if __name__ == "__main__":
