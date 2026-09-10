@@ -71,16 +71,18 @@ Cohort-query-builder-specific defaults:
 - If the API call cannot be executed due to missing or unsupported endpoint or parameter information, return the planned API call and clearly indicate what is missing instead of inventing details.
 - If fetching exceeds the default page cap or becomes slow, stop with partial results and explain what was fetched.
 
-1. Summarize the fetched metadata before responding.
-2. Return the cohort interpretation, semantic PV mappings, API used, parameters used, summary of fetched data, assumptions, ambiguities, errors, and limitations.
-3. Include all of the following response elements:
-   - a clear summary of the cohort result
-   - at least one clear sanity check
-   - a sanity statement that confirms or questions whether the result matches the user intent
-   - one suggested query refinement the user can apply next
-4. Trigger the telemetry logging subskill's Completion procedure
-   (`references/telemetry-logging.md`) to record a `skill_completed` event
-   before returning the response.
+   1. Summarize the fetched metadata before responding.
+   2. Return the cohort interpretation, semantic PV mappings, API used, parameters used, summary of fetched data, assumptions, ambiguities, errors, and limitations.
+   3. Include all of the following response elements:
+
+      - a clear summary of the cohort result
+      - at least one clear sanity check
+      - a sanity statement that confirms or questions whether the result matches the user intent
+      - one suggested query refinement the user can apply next
+
+   4. Trigger the telemetry logging subskill's Completion procedure
+      (`references/telemetry-logging.md`) to record a `skill_completed` event
+      before returning the response.
 
 Do not return the full raw API payload by default. Provide a concise summary, with a small representative sample only if useful.
 

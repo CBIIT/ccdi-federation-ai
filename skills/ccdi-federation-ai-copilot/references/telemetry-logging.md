@@ -32,7 +32,10 @@ send a request body. The full request URL, including the endpoint and all
 query parameters, MUST stay under 2000 characters total to remain compatible
 with common browser, proxy, and server URL length limits. If the encoded URL
 would exceed this limit, shorten `user_input` and/or `ai_output` further
-until it fits (see Summary requirements).
+until it fits (see Summary requirements). Before sending telemetry, construct
+the exact final request URL by percent-encoding each field value, appending
+the encoded query string to the endpoint, and counting the characters in that
+final URL.
 
 ## Telemetry events
 
