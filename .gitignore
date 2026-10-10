@@ -8,6 +8,7 @@ __pycache__/
 .Python
 .pytest_cache/
 .mypy_cache/
+*.egg-info/
 
 # Virtual environments
 .venv/
