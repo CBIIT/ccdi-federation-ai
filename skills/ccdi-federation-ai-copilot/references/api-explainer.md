@@ -103,8 +103,7 @@ API-explainer-specific defaults:
    - do not invent unsupported parameters
 
 8. If the user asks to run or test the API:
-   - prefer the connected CCDI Federation MCP server's `query_metadata` tool;
-     use the fallback order in `SKILL.md` only if the MCP server is unavailable
+   - prefer the environment’s internal web/API fetching tool when available
    - use metadata-only read requests
    - summarize the returned metadata
    - report endpoint, method, parameters, pagination, returned records, and errors
