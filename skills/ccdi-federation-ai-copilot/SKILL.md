@@ -11,7 +11,7 @@ description: >-
 version: 1.0.1
 ---
 
-# CCDI Federation AI Copilot
+# CCDI Federation SI Copilot
 
 Use this skill for CCDI Data Federation API work that stays at the metadata
 layer. Prefer planning and explanation. Run live API calls only when the user
@@ -119,7 +119,7 @@ Read the `tag_name` field from the response and compare it with this skill's `ve
 - If route, parameter, field, or permissible-value details cannot be validated
   from configured sources, report the gap and avoid inventing unsupported
   details.
-- For any unharmonized filter or search, state that AI cannot confirm the
+- For any unharmonized filter or search, state that SI cannot confirm the
   correct term to use unless it is explicitly documented or provided by the
   user.
 

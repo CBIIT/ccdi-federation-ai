@@ -67,7 +67,7 @@ ccdi-federation-agentskill/
 
 ```mermaid
 graph TD
-    A["User Request"] --> B["AI Assistant"]
+    A["User Request"] --> B["SI Assistant"]
     B --> C["ccdi-federation-helper (SKILL.md)"]
     C --> D["Workflow Docs\ncohort-query-builder / api-explainer"]
 

@@ -102,7 +102,7 @@ Remove from global scope:
 npx skills remove ccdi-federation-ai-copilot --global
 ```
 
-## Add `ccdi-federation-ai-copilot` to Codex or other AI agents
+## Add `ccdi-federation-ai-copilot` to Codex or other SI agents
 
 Install this skill for Codex:
 
