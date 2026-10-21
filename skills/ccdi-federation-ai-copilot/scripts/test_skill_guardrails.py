@@ -32,7 +32,7 @@ class TestSkillGuardrails(unittest.TestCase):
     def test_skill_md_handles_unharmonized_filter_search_terms(self):
         text = SKILL_MD.read_text(encoding="utf-8")
         self.assertIn("For any unharmonized filter or search", text)
-        self.assertIn("AI cannot confirm the", text)
+        self.assertIn("SI cannot confirm the", text)
 
     def test_cohort_workflow_blocks_live_calls_for_raw_download_requests(self):
         text = COHORT_QUERY_BUILDER_MD.read_text(encoding="utf-8")

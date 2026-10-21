@@ -1,6 +1,6 @@
 # Snyk PR Security Scan
 
-This document explains how the automated Snyk security scan works for Pull Requests in the CCDI Federation AI repository, including required configuration and expected behavior.
+This document explains how the automated Snyk security scan works for Pull Requests in the CCDI Federation SI repository, including required configuration and expected behavior.
 
 ---
 

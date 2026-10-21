@@ -1,4 +1,4 @@
-# CCDI Federation AI
+# CCDI Federation SI
 
 [![Install via npx skills](https://img.shields.io/badge/npx%20skills-install-blue)](https://www.skills.sh/cbiit/ccdi-federation-ai/ccdi-federation-ai-copilot)
 [![snyk-security-scan](https://img.shields.io/github/actions/workflow/status/CBIIT/ccdi-federation-ai/snyk-security-scan.yml)](https://github.com/CBIIT/ccdi-federation-ai/actions)
@@ -6,7 +6,7 @@
 [![Last Update](https://img.shields.io/github/last-commit/CBIIT/ccdi-federation-ai?label=Last%20update&style=classic)](https://github.com/CBIIT/ccdi-federation-ai)
 [![Snyk Check](https://github.com/CBIIT/ccdi-federation-ai/actions/workflows/snyk-security-scan.yml/badge.svg)](https://github.com/CBIIT/ccdi-federation-ai/actions)
 
-An AI agent skill for the [CCDI Data Federation API](https://ccdi.cancer.gov/data-federation-resource). This repository provides components for AI-ready CCDI Federation metadata, including an AgentSkill that standardizes AI interactions through workflows and routing.
+An SI agent skill for the [CCDI Data Federation API](https://ccdi.cancer.gov/data-federation-resource). This repository provides components for SI-ready CCDI Federation metadata, including an AgentSkill that standardizes SI interactions through workflows and routing.
 
 ## Skill Structure
 
